@@ -1,0 +1,26 @@
+{
+  "author": "Chris Allison <chris@quimarche.co.uk>",
+  "bugs": "https://github.com/quimarche/germ/issues",
+  "description": "An embryonic AngularJS project.",
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-contrib-clean": "~0.5.0",
+    "grunt-contrib-copy": "~0.5.0",
+    "grunt-contrib-jshint": "~0.8.0",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-html2js": "~0.2.4",
+    "grunt-karma": "~0.6.2",
+    "grunt-protractor-runner": "~0.2.1",
+    "grunt-strip": "~0.2.1",
+    "grunt-useref": "0.0.16",
+    "protractor": "~0.16.1"
+  },
+  "homepage": "https://github.com/quimarche/germ",
+  "license": "MIT",
+  "name": "germ",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:quimarche/germ.git"
+  },
+  "version": "0.0.0"
+}

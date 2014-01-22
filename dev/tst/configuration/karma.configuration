@@ -1,0 +1,17 @@
+module.exports = function(config) {
+    config.set({
+        basePath: "../../",
+        browsers: ["Chrome"],
+        files: [
+            "src/js/angular/angular.min.js",
+            "src/js/angular/angular-route.min.js",
+            "tst/js/angular/angular-mocks.js",
+            "src/js/gpp/*.js",
+            "src/js/gpp/**/*.js",
+            "tst/js/gpp/karma/helpers.js",
+            "tst/js/gpp/karma/**/*.js"
+        ],
+        frameworks: ["jasmine"],
+        singleRun: true
+    });
+};
