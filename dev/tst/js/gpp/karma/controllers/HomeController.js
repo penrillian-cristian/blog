@@ -13,8 +13,12 @@ describe("Controllers", function() {
             expect(controller).toBeDefined();
         });
 
-        it("should have a todo method", function() {
-            expect(scope.todo).toBeFunction();
+        it("should have a posts array", function() {
+            expect(scope.posts).toBeDefined;
+        });
+
+        it("should have a posts method which returns an array of posts", function() {
+            expect(scope.posts.length).toEqual(3);
         });
     });
 });
