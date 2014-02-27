@@ -1,12 +1,12 @@
 describe("Given I have an open browser", function() {
-    ptor = protractor.getInstance();
+    ptor = protractor.getInstance();//
 
     describe("When I navigate to the home page", function() {
         ptor.get("#/");
 
         it("should have the expected chrome", function() {
-            message = ptor.findElement(protractor.By.className("todo"));
-            expect(message.getText()).toEqual("todo");
+            welcomeElement = ptor.findElement(protractor.By.className("welcome"));
+            expect(welcomeElement.getText()).toEqual("Welcome to our blog");
         });
     });
 });
