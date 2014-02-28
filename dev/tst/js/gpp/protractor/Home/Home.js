@@ -13,8 +13,8 @@ describe("Given I have an open browser", function() {
         });
 
         it("should have the expected welcome message", function() {
-            var welcomeElement = ptor.findElement(protractor.By.className("welcome"));
-            expect(welcomeElement.getText()).toEqual("Welcome to our blog");
+            var welcomeElement = ptor.findElement(protractor.By.className("blog-title"));
+            expect(welcomeElement.getText()).toEqual("Welcome to our Blog");
 
         });
 
