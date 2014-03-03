@@ -165,13 +165,27 @@
                 input {width: 220px}
                 </style>
 
-                <form>
+               <!-- <form>
                     <fieldset>
-                        login : <input type="text" name="login"><br/>
-                        password: <input type="text" name="password"><br/>
+                        username: <input id="inuser" type="text" name="username"><br/>
+                        password: <input id="inpassword" type="text" name="password"><br/>
                         <input type="submit" value="Submit"><br/>
                     </fieldset>
-                </form>
+                </form>-->
+
+                <div ng-controller="HomeController">
+                    username: <input ng-model="username">
+                    password: <input ng-model="password">
+                    <button ng-click="register(username,password)">Register</button>
+                    <br><br>
+                    username: <input ng-model="user">
+                    password: <input ng-model="pass">
+                    <button ng-click="login(user,pass)">Login</button>
+                    <p>{{result}}</p>
+                </div>
+
+
+
             </div>
 
             <div class="sidebar-module sidebar-module-inset">

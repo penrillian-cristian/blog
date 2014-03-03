@@ -8,4 +8,33 @@ ApplicationControllers.controller("HomeController", ["$scope", function($scope) 
         ];
         //return posts;
 
+    $scope.loginDetails = [];
+    $scope.register = function(username, password){
+        $scope.loginDetails.push({username: username, password:password});
+    };
+
+    $scope.login = function(user, pass){
+        $scope.result = "";
+        for(var i=0; i<$scope.loginDetails.length;i++){
+            if((user ===  $scope.loginDetails[i].username)&& (pass === $scope.loginDetails[i].password) ){
+                $scope.result = "Login was successful";
+                break;
+            }else{
+                $scope.result = "Invalid username or password";
+            }
+        }
+    };
+
 }]);
+
+/*
+ApplicationControllers.controller("LoginController", ["$scope", function($scope) {
+
+    $scope.login = function(username, password){
+      // $scope.username = username;
+      // $scope.password = password;
+    };
+    //return posts;
+
+
+}]);*/
