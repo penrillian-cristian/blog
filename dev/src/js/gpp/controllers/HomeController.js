@@ -10,7 +10,25 @@ ApplicationControllers.controller("HomeController", ["$scope", function ($scope)
 
     $scope.loginDetails = [];
     $scope.register = function (username, password) {
-        $scope.loginDetails.push({username: username, password: password});
+        $scope.output = "";
+
+        if (!username || !password) {
+            $scope.output = "Required fields are empty";
+
+        }
+        else {
+            if ($scope.loginDetails.length !== 0) {
+                for (var i = 0; i < $scope.loginDetails.length; i++) {
+
+                    if (username === $scope.loginDetails[i].username) {
+                        $scope.output = "Username already taken";
+                        return;
+                    }
+                }
+            }
+            $scope.loginDetails.push({username: username, password: password});
+            $scope.output = "Registration was successful";
+        }
     };
 
     $scope.login = function (user, pass) {
@@ -21,7 +39,7 @@ ApplicationControllers.controller("HomeController", ["$scope", function ($scope)
 
         } else {
 
-            if ($scope.loginDetails.length===0) {
+            if ($scope.loginDetails.length === 0) {
                 $scope.result = "Invalid username or password";
             }
 
@@ -38,6 +56,7 @@ ApplicationControllers.controller("HomeController", ["$scope", function ($scope)
             }
         }
     };
+
 
 }]);
 
