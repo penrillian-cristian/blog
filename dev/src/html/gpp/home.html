@@ -35,8 +35,9 @@
 <div class="row">
 <div class="col-sm-8 blog-main">
 
-
-    <div class="post" ng-repeat="post in posts">
+    <button ng-click="february=!february">February</button>
+    <button ng-click="march=!march">March</button>
+    <div class="post" ng-repeat="post in posts" ng-hide={{post.date}}>
         <!--{{post.title+" "+post.id}}-->
 
         <h2 class="blog-post-title">{{post.title}}</h2>
@@ -194,6 +195,9 @@
 
         </div>
         <p>{{result}}</p>
+        <!--<button ng-click="printout()">Test</button>
+        <p>{{key}}</p>-->
+
 
     </div>
 

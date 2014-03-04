@@ -1,5 +1,5 @@
 "use strict";
-
+//,"ngStorage"
 var ApplicationControllers;
 
 ApplicationControllers = angular.module("Application.Controllers", []);
@@ -10,3 +10,4 @@ angular.module("Application", ["Application.Controllers", "Application.Templates
             .when("/home", {controller: "HomeController", templateUrl: "html/gpp/home.html"})
             .otherwise({redirectTo: "/home"});
     }]);
+

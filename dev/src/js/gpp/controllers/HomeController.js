@@ -1,10 +1,15 @@
 "use strict";
-
+//$localStorage
 ApplicationControllers.controller("HomeController", ["$scope", function ($scope) {
+    //$scope.x = $localStorage;
+    /*$scope.$storage = $localStorage({
+        x: 42
+    });*/
+
     $scope.posts = [
-        {id: 1, title: "Sample Post Title 1", date: "27-02-2014", author: "Filip Machinia", category: "technology", content: "This is the first blog post"},
-        {id: 2, title: "Sample Post Title 2", date: "27-02-2014", author: "Cristian Ivascu", category: "technology", content: "This is the second blog post"},
-        {id: 3, title: "Sample Post Title 3", date: "27-02-2014", author: "Chris Allison", category: "technology", content: "This is the third blog post"}
+        {id: 1, title: "Post from February", date: "february", author: "Filip Machinia", category: "technology", content: "This is the first blog post"},
+        {id: 2, title: "Post from March", date: "march", author: "Cristian Ivascu", category: "technology", content: "This is the second blog post"},
+        {id: 3, title: "Post from March", date: "march", author: "Chris Allison", category: "technology", content: "This is the third blog post"}
     ];
     //return posts;
 
@@ -27,6 +32,7 @@ ApplicationControllers.controller("HomeController", ["$scope", function ($scope)
                 }
             }
             $scope.loginDetails.push({username: username, password: password});
+            //localStorageService.add("test1","test2");
             $scope.output = "Registration was successful";
         }
     };
@@ -57,6 +63,11 @@ ApplicationControllers.controller("HomeController", ["$scope", function ($scope)
         }
     };
 
+/*
+    $scope.printout = function () {
+        //$scope.key = localStorageService.get("test1");
+
+    };*/
 
 }]);
 
