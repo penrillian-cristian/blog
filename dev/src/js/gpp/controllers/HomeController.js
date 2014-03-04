@@ -1,10 +1,12 @@
 "use strict";
 //$localStorage
-ApplicationControllers.controller("HomeController", ["$scope", function ($scope) {
+ApplicationControllers.controller("HomeController", ["$scope", "localStorageService", function ($scope, localStorageService) {
     //$scope.x = $localStorage;
     /*$scope.$storage = $localStorage({
-        x: 42
-    });*/
+     x: 42
+     });*/
+    //localStorageService.clearAll();
+    //localStorageService.add("Favorite Sport", "Ultimate Frisbee");
 
     $scope.posts = [
         {id: 1, title: "Post from February", date: "february", author: "Filip Machinia", category: "technology", content: "This is the first blog post"},
@@ -13,7 +15,7 @@ ApplicationControllers.controller("HomeController", ["$scope", function ($scope)
     ];
     //return posts;
 
-    $scope.loginDetails = [];
+    //$scope.loginDetails = [];
     $scope.register = function (username, password) {
         $scope.output = "";
 
@@ -22,19 +24,24 @@ ApplicationControllers.controller("HomeController", ["$scope", function ($scope)
 
         }
         else {
-            if ($scope.loginDetails.length !== 0) {
-                for (var i = 0; i < $scope.loginDetails.length; i++) {
+            //if ($scope.loginDetails.length !== 0) {
 
-                    if (username === $scope.loginDetails[i].username) {
-                        $scope.output = "Username already taken";
-                        return;
-                    }
-                }
+
+            if (localStorageService.get(username)) {
+                $scope.output = "Username already taken";
+                return;
             }
-            $scope.loginDetails.push({username: username, password: password});
+
+            //}
+            //$scope.loginDetails.push({username: username, password: password});
             //localStorageService.add("test1","test2");
+            localStorageService.add(username, password);
+            //var testData = localStorageService.get(username); // create a var to print password
+
+            //alert("password " + testData);
             $scope.output = "Registration was successful";
         }
+
     };
 
     $scope.login = function (user, pass) {
@@ -45,29 +52,26 @@ ApplicationControllers.controller("HomeController", ["$scope", function ($scope)
 
         } else {
 
-            if ($scope.loginDetails.length === 0) {
+
+            //for (var i = 0; i < $scope.loginDetails.length; i++) {
+
+            // if ((user === $scope.loginDetails[i].username) && (pass === $scope.loginDetails[i].password)) {
+            if (localStorageService.get(user) === pass) {
+                $scope.result = "Login was successful";
+                // break;
+            } else {
                 $scope.result = "Invalid username or password";
             }
+            //}
 
-            else {
-                for (var i = 0; i < $scope.loginDetails.length; i++) {
-
-                    if ((user === $scope.loginDetails[i].username) && (pass === $scope.loginDetails[i].password)) {
-                        $scope.result = "Login was successful";
-                        break;
-                    } else {
-                        $scope.result = "Invalid username or password";
-                    }
-                }
-            }
         }
     };
 
-/*
-    $scope.printout = function () {
-        //$scope.key = localStorageService.get("test1");
+    /*
+     $scope.printout = function () {
+     //$scope.key = localStorageService.get("test1");
 
-    };*/
+     };*/
 
 }]);
 

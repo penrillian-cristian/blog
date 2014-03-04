@@ -5,6 +5,7 @@ module.exports = function(config) {
         files: [
             "src/js/angular/angular.min.js",
             "src/js/angular/angular-route.min.js",
+            "src/js/angular/angular-local-storage.js",
             "tst/js/angular/angular-mocks.js",
             "src/js/gpp/*.js",
             "src/js/gpp/**/*.js",

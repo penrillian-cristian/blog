@@ -4,7 +4,7 @@ var ApplicationControllers;
 
 ApplicationControllers = angular.module("Application.Controllers", []);
 
-angular.module("Application", ["Application.Controllers", "Application.Templates", "ngRoute"])
+angular.module("Application", ["Application.Controllers", "Application.Templates", "ngRoute", "LocalStorageModule"])
     .config(["$routeProvider", function($routeProvider) {
         $routeProvider
             .when("/home", {controller: "HomeController", templateUrl: "html/gpp/home.html"})

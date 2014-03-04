@@ -1,5 +1,5 @@
 describe("Controllers", function() {
-    beforeEach(module("Application.Controllers"));
+    beforeEach(module("Application.Controllers", "LocalStorageModule"));
 
     var controller, scope;
 
