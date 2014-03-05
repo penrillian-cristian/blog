@@ -29,15 +29,30 @@
     <h1 class="blog-title">Welcome to our Blog</h1>
 
     <p class="lead blog-description">The official example template of creating a blog with Bootstrap.</p>
+    <button ng-click="writepost=!writepost" style = "border: none;padding: 0;background: none; outline:0">Write new post</button>
 </div>
 
 
-<div class="row">
+
+
+<div class="col-sm-8 blog-main" ng-show = "writepost">
+    <ul>
+    <li> Title: <input ng-model="postTitle"> </li>
+    <li> Category: <input ng-model="postCategory"> </li>
+    <li> Text: <input ng-model="postText"> </li>
+    <li><button ng-click="writePost(postTitle, postCategory, postText); writepost=!writepost">Ok</button></li>
+    </ul>
+</div>
+
+
+
+
+
+<div class="row" ng-hide = "writepost">
 <div class="col-sm-8 blog-main">
 
-    <button ng-click="february=!february">February</button>
-    <button ng-click="march=!march">March</button>
-    <div class="post" ng-repeat="post in posts" ng-hide={{post.date}}>
+
+    <div class="post" ng-repeat="post in posts" ng-show="{{post.datecode}}">
         <!--{{post.title+" "+post.id}}-->
 
         <h2 class="blog-post-title">{{post.title}}</h2>
@@ -210,18 +225,18 @@
     <div class="sidebar-module">
         <h4>Archives</h4>
         <ol class="list-unstyled">
-            <li><a href="#">January 2014</a></li>
-            <li><a href="#">December 2013</a></li>
-            <li><a href="#">November 2013</a></li>
-            <li><a href="#">October 2013</a></li>
-            <li><a href="#">September 2013</a></li>
-            <li><a href="#">August 2013</a></li>
-            <li><a href="#">July 2013</a></li>
-            <li><a href="#">June 2013</a></li>
-            <li><a href="#">May 2013</a></li>
-            <li><a href="#">April 2013</a></li>
-            <li><a href="#">March 2013</a></li>
-            <li><a href="#">February 2013</a></li>
+            <li> <button ng-click="feb2014=!feb2014;" style = "border: none;padding: 0;background: none; outline:0">February 2014</button></li>
+            <li> <button ng-click="jan2014=!jan2014;" style = "border: none;padding: 0;background: none; outline:0">January 2014</button></li>
+            <li> <button ng-click="dec2013=!dec2013;" style = "border: none;padding: 0;background: none; outline:0">December 2013</button></li>
+            <li> <button ng-click="nov2013=!nov2013;" style = "border: none;padding: 0;background: none; outline:0">November 2013</button></li>
+            <li> <button ng-click="oct2013=!oct2013;" style = "border: none;padding: 0;background: none; outline:0">October 2013</button></li>
+            <li> <button ng-click="sep2013=!sep2013;" style = "border: none;padding: 0;background: none; outline:0">September 2013</button></li>
+            <li> <button ng-click="aug2013=!aug2013;" style = "border: none;padding: 0;background: none; outline:0">August 2013</button></li>
+            <li> <button ng-click="jul2013=!jul2013;" style = "border: none;padding: 0;background: none; outline:0">July 2013</button></li>
+            <li> <button ng-click="jun2013=!jun2013;" style = "border: none;padding: 0;background: none; outline:0">June 2013</button></li>
+            <li> <button ng-click="may2013=!may2013;" style = "border: none;padding: 0;background: none; outline:0">May 2013</button></li>
+            <li> <button ng-click="apr2013=!apr2013;" style = "border: none;padding: 0;background: none; outline:0">April 2013</button></li>
+            <li> <button ng-click="mar2013=!mar2013;" style = "border: none;padding: 0;background: none; outline:0">March 2013</button></li>
         </ol>
     </div>
     <div class="sidebar-module">
@@ -237,6 +252,10 @@
 
 </div>
 <!-- /.row -->
+
+
+
+
 
 </div>
 <!-- /.container -->
