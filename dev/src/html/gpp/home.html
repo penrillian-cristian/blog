@@ -29,7 +29,9 @@
     <h1 class="blog-title">Welcome to our Blog</h1>
 
     <p class="lead blog-description">The official example template of creating a blog with Bootstrap.</p>
-    <button ng-click="writepost=!writepost" style = "border: none;padding: 0;background: none; outline:0">Write new post</button>
+    <button ng-click="writeAttempt()">Write new post</button>
+    <button ng-click="clearFunc()">Clear Data</button>
+    <p>{{writeAttemptResultString}}</p>
 </div>
 
 
@@ -57,7 +59,7 @@
 
         <h2 class="blog-post-title">{{post.title}}</h2>
 
-        <p class="blog-post-meta">{{post.date}} by <a href="#">{{post.author}}</a></p>
+        <p class="blog-post-meta">{{post.date}} by <a href="#">{{post.author}}</a> in <i>{{post.category}}</i></p>
 
         <p>This blog post shows a few different types of content that's supported and styled with Bootstrap.
             Basic typography, images, and code are all supported.</p>
@@ -193,23 +195,30 @@
          </form>-->
 
         <!--<div ng-controller="HomeController">-->
-        <div id="registerForm" ng-show="pressed">
-            username: <input ng-model="username">
-            password: <input ng-model="password">
-            <button ng-click="register(username,password);pressed=!pressed">Ok</button>
-            <button ng-click="pressed=!pressed"> Cancel</button>
+
+        <div id="welcomeMessage" ng-show="registerResult || loginResult">
+            <p>Welcome {{usr}}! </p>
+            <button ng-click="pressed = false; clearResults()">Logout</button>
+        </div>
+
+
+        <div id="registerForm" ng-show="pressed && !registerResult && !loginResult">
+            username: <input name="registerUsernameField" ng-model="username">
+            password: <input name="registerPasswordField" ng-model="password">
+            <button ng-click="register(username,password)">Ok</button>
+            <button ng-click="pressed=!pressed;clearResults()"> Cancel</button>
 
         </div>
-        <p>{{output}}</p>
+        <p>{{registerResultString}}</p>
 
-        <div id="loginForm" ng-hide="pressed">
-            username: <input ng-model="user">
-            password: <input ng-model="pass">
-            <button ng-click="login(user,pass)">Login</button>
-            <button ng-click="pressed=!pressed"> Register</button>
+        <div id="loginForm" ng-show="!pressed && !registerResult && !loginResult">
+            username: <input name="loginUsernameField" ng-model="user">
+            password: <input name="loginPasswordField" ng-model="pass">
+            <button name="loginButton" ng-click="login(user,pass)">Login</button>
+            <button name="registerButton" ng-click="pressed=!pressed"> Register</button>
 
         </div>
-        <p>{{result}}</p>
+        <p ng-show="!pressed">{{loginResultString}}</p>
         <!--<button ng-click="printout()">Test</button>
         <p>{{key}}</p>-->
 

@@ -37,24 +37,24 @@ describe("Given I have an open browser", function () {
         });
 
 
-        it("should have 2 empty fields for login and 3 for register", function () {
+        it("should have 2 empty fields for login and 2 for register", function () {
             var logUsernameField = ptor.findElement(protractor.By.name("loginUsernameField"));
             var logPasswordField = ptor.findElement(protractor.By.name("loginPasswordField"));
 
             var regUsernameField = ptor.findElement(protractor.By.name("registerUsernameField"));
             var regPasswordField = ptor.findElement(protractor.By.name("registerPasswordField"));
-            var regEmailField = ptor.findElement(protractor.By.name("registerEmailField"));
+            //var regEmailField = ptor.findElement(protractor.By.name("registerEmailField"));
 
             expect(logUsernameField.getTagName()).toBe("input");
             expect(logPasswordField.getTagName()).toBe("input");
 
             expect(regUsernameField.getTagName()).toBe("input");
             expect(regPasswordField.getTagName()).toBe("input");
-            expect(regEmailField.getTagName()).toBe("input");
+            //expect(regEmailField.getTagName()).toBe("input");
         });
 
         //TODO: move to unit testing ??
-        it("registered user should provide a valid email address", function () {
+        xit("registered user should provide a valid email address", function () {
             var userEmail = ptor.findElement(protractor.By.name("registerEmailField"));
             var test = false;
 
@@ -65,7 +65,7 @@ describe("Given I have an open browser", function () {
              expect(test);*/
         });
 
-        it("should print 1 category for each post", function () {
+        xit("should print 1 category for each post", function () {
             var category = ptor.findElement(protractor.By.name("postCategory")).then(function (category) {
                 expect(category.length).toEqual(1);
             });
@@ -74,7 +74,7 @@ describe("Given I have an open browser", function () {
         });
     });
 
-    describe("When user logged in", function () {
+    xdescribe("When user logged in", function () {
         beforeEach(inject(function ($controller) {
             scope = {};
             controller = $controller("HomeController", {$scope: scope});
@@ -105,7 +105,7 @@ describe("Given I have an open browser", function () {
 
             expect(post).toBeUndefined;
         });
-        describe("When user is writing a new post", function () {
+        xdescribe("When user is writing a new post", function () {
             it("should be possible to write a post", function () {
 
             });
@@ -118,7 +118,7 @@ describe("Given I have an open browser", function () {
             });
 
         });
-        describe("When new post is created", function () {
+        xdescribe("When new post is created", function () {
             it("should increase a number of posts by 1", function () {
                 var post = ptor.findElement(protractor.By.name("posts"));
 
