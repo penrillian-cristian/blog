@@ -199,8 +199,8 @@
         <!--<div ng-controller="HomeController">-->
 
         <div id="welcomeMessage" ng-show="registerResult || loginResult">
-            <p>Welcome {{usr}}! </p>
-            <button ng-click="pressed = false; clearResults()">Logout</button>
+            <p name = "welcomeText">Welcome {{usr}}! </p>
+            <button name = "logoutButton" ng-click="pressed = false; clearResults()">Logout</button>
         </div>
 
 
@@ -211,7 +211,7 @@
             <button name="registerCancel" ng-click="pressed=!pressed;clearResults()"> Cancel</button>
 
         </div>
-        <p>{{registerResultString}}</p>
+        <p name = "registerResult">{{registerResultString}}</p>
 
         <div id="loginForm" ng-show="!pressed && !registerResult && !loginResult">
             username: <input name="loginUsernameField" ng-model="user">
@@ -220,7 +220,7 @@
             <button name="registerButton" ng-click="pressed=!pressed"> Register</button>
 
         </div>
-        <p ng-show="!pressed">{{loginResultString}}</p>
+        <p name = "loginResult" ng-show="!pressed">{{loginResultString}}</p>
         <!--<button ng-click="printout()">Test</button>
         <p>{{key}}</p>-->
 
