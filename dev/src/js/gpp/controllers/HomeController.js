@@ -2,6 +2,12 @@
 
 ApplicationControllers.controller("HomeController", ["$scope", "localStorageService", function ($scope, localStorageService) {
 
+    $scope.allDisplayed = true;
+    $scope.topPostsArray = [];
+    $scope.selectedMonthArray = [];
+    $scope.offset = 0;
+    $scope.monthFilterSet = false;
+
     $scope.clearFunc = function () {
         localStorageService.clearAll();
     };
@@ -16,6 +22,14 @@ ApplicationControllers.controller("HomeController", ["$scope", "localStorageServ
         ];
     }
 
+    $scope.displayPosts = function () {
+        if ($scope.monthFilterSet) {
+            $scope.topPostsArray = $scope.selectedMonthArray.slice(0 + $scope.offset, 5 + $scope.offset);
+        } else {
+            $scope.topPostsArray = $scope.posts.slice(0 + $scope.offset, 5 + $scope.offset);
+        }
+    };
+    $scope.displayPosts();
 
     /*[
      {id: 1, title: "Post from February", date: "February 2014", datecode: "feb2014", author: "Filip Machinia", category: "technology", content: "This is the first blog post"},
@@ -88,8 +102,18 @@ ApplicationControllers.controller("HomeController", ["$scope", "localStorageServ
     };
 
     $scope.writePost = function (postTitle, postCategory, postContent) {
-        $scope.posts.push({id: 4, title: postTitle, date: "April 2013", datecode: "apr2013", author: $scope.usr, category: postCategory, content: postContent});
+        var currentPost = {id: 4, title: postTitle, date: "April 2013", datecode: "apr2013", author: $scope.usr, category: postCategory, content: postContent};
+        $scope.posts.unshift(currentPost);
         localStorageService.add("posts", $scope.posts);
+
+        $scope.topPostsArray = $scope.posts.slice(0, 5);
+
+        //$scope.counter++;
+        /* if($scope.topPostsArray.length == 5){
+         $scope.topPostsArray.splice($scope.topPostsArray.length-1,1);
+         }
+         $scope.topPostsArray.unshift(currentPost);*/
+        //localStorageService.add("topPosts", $scope.topPostsArray);
     };
 
     $scope.writeAttempt = function () {
@@ -100,6 +124,50 @@ ApplicationControllers.controller("HomeController", ["$scope", "localStorageServ
             $scope.writepost = !$scope.writepost;
             $scope.writeAttemptResultString = "";
         }
+    };
+
+    $scope.setMonth = function (month) {
+        $scope.offset = 0;
+        $scope.desiredMonth = month;
+        $scope.topPostsArray = [];
+        $scope.selectedMonthArray = [];
+        for (var i = 0; i < $scope.posts.length; i++) {
+            if ($scope.posts[i].datecode === month) {
+                $scope.selectedMonthArray.push($scope.posts[i]);
+            }
+        }
+        $scope.monthFilterSet = true;
+        $scope.displayPosts();
+        //$scope.topPostsArray = $scope.selectedMonthArray.slice(0,5);
+        //$scope.init($scope.selectedMonthArray);
+    };
+
+    $scope.allDisplayed = function () {
+        $scope.offset = 0;
+        //$scope.topPostsArray = $scope.posts.slice(0,5);
+        //$scope.init($scope.posts);
+        $scope.monthFilterSet = false;
+        $scope.displayPosts();
+    };
+
+    $scope.movePage = function (direction) {
+        if (direction === "right") {
+            if ($scope.monthFilterSet) {
+                $scope.sizeLimit = $scope.selectedMonthArray.length;
+            } else {
+                $scope.sizeLimit = $scope.posts.length;
+            }
+
+            if ($scope.offset + 5 < $scope.sizeLimit) {
+                $scope.offset += 5;
+            }
+        } else {
+            if ($scope.offset !== 0) {
+                $scope.offset -= 5;
+            }
+        }
+        $scope.displayPosts();
+
     };
 
 
