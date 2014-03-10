@@ -140,6 +140,23 @@ describe("Given I have an open browser", function () {
         });
         */
 
+
+        //when fields are empty, user can't login
+       // when user not registered, can't login
+       // when register clicked, fields should come up
+       // when fields empty, user can't login
+       // when username and password provided, user is registered and logged in
+       // when logout, fields should become empty and no write post button should be present
+       // when user press register and enters same usrname, error message should be displayed
+       // when user presses login with same details, he should succesfully login and write post button present
+       // when user presses write post, fields should appear
+       // NOT IMPLEMENTED: when user presses cancel, should go back to main screen
+       // user presses write post, then completes fields and clicks ok
+       // NOT IMPLEMENTED: if one field is empty, error message should appear
+       // otherwise, when user clicks ok, post should be added to the list (eg. list size bigger than 1?)
+       // when month is selected, all div elements of class post should have corresponding month name
+       // when show all is pressed, all posts should be present
+
         describe("When user presses next", function () {
             /*beforeEach(inject(function ($controller) {
                 scope = {};
