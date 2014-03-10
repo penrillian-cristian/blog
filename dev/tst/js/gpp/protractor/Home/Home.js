@@ -73,7 +73,7 @@ describe("Given I have an open browser", function () {
 
         });
     });
-
+    /*
     xdescribe("When user logged in", function () {
         beforeEach(inject(function ($controller) {
             scope = {};
@@ -122,13 +122,13 @@ describe("Given I have an open browser", function () {
             it("should increase a number of posts by 1", function () {
                 var post = ptor.findElement(protractor.By.name("posts"));
 
-                expect(post.length).toBe(post.length+1);
+                expect(post.length).toBe(post.length + 1);
             });
             it("should create a post with ID= highest ID +1", function () {
                 var post = ptor.findElement(protractor.By.name("posts"));
                 var ID = ptor.findElement(protractor.By.name("ID"));
 
-                expect(posts.length.ID).toBe(ID+2);
+                expect(scope.posts.length.ID).toBe(ID + 2);
             });
             it("should be possible to read a post", function () {
 
@@ -137,6 +137,78 @@ describe("Given I have an open browser", function () {
 
             });
 
-        })
-    });
+        });
+        */
+
+        describe("When user presses next", function () {
+            /*beforeEach(inject(function ($controller) {
+                scope = {};
+                controller = $controller("HomeController", {$scope: scope});
+                scope.login("username", "password");
+            }));*/
+            /*scope.register("username", "password");
+            scope.login("username", "password");
+            //var okButton = ptor.findElement(protractor.By.name("okWrite"));
+            //okButton.click();
+            scope.writePost("postTitle1", "postCategory","postContent");
+            scope.writePost("postTitle2", "postCategory", "postContent");
+            scope.writePost("postTitle3", "postCategory", "postContent");
+
+
+            var nextButton = ptor.findElement(protractor.By.name("nextButton"));
+            nextButton.click();*/
+            it("should show between 1 and 5 posts", function () {
+                var registerButton = ptor.findElement(protractor.By.name("registerButton"));
+                registerButton.click();
+                var userRegisterField = ptor.findElement(protractor.By.name("registerUsernameField"));
+                userRegisterField.sendKeys("ci");
+                var passwordRegisterField = ptor.findElement(protractor.By.name("registerPasswordField"));
+                passwordRegisterField.sendKeys("abc");
+                var registerConfirmButton = ptor.findElement(protractor.By.name("registerConfirm"));
+                registerConfirmButton.click();
+                //scope.writePost("postTitle1", "postCategory","postContent");
+                //scope.writePost("postTitle2", "postCategory", "postContent");
+                //scope.writePost("postTitle3", "postCategory", "postContent");
+
+                for(var i =0; i<8; i++){
+                    var writePostButton = ptor.findElement(protractor.By.name("writePost"));
+                    writePostButton.click();
+                    var postTitle = ptor.findElement(protractor.By.model("postTitle"));
+                    postTitle.clear();
+                    postTitle.sendKeys("Test post "+i);
+                    var postCategory = ptor.findElement(protractor.By.model("postCategory"));
+                    postCategory.clear();
+                    postCategory.sendKeys("Technology");
+                    var postText = ptor.findElement(protractor.By.model("postText"));
+                    postText.clear();
+                    postText.sendKeys("I am writing a blog post");
+                    var writeOk = ptor.findElement(protractor.By.name("writeOk"));
+                    writeOk.click();
+                }
+                var nextButton = ptor.findElement(protractor.By.name("nextButton"));
+                nextButton.click();
+
+                ptor.findElements(protractor.By.className("post")).then(function (postElements) {
+                    expect(postElements.length).toBeGreaterThan(0);
+                    expect(postElements.length).toBeLessThan(6);
+                });
+            });
+
+        });
+
+
+        describe("When user presses previous", function () {
+            it("there should be between 1 and 5 posts", function () {
+                var previousButton = ptor.findElement(protractor.By.name("previousButton"));
+                previousButton.click();
+                ptor.findElements(protractor.By.className("post")).then(function (postElements) {
+                    expect(postElements.length).toBeGreaterThan(0);
+                    expect(postElements.length).toBeLessThan(6);
+                });
+            });
+
+        });
+
+
+   // });
 });
