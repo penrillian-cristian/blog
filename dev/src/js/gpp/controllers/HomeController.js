@@ -1,4 +1,5 @@
 "use strict";
+/*jslint browser:true */
 
 ApplicationControllers.controller("HomeController", ["$scope", "localStorageService", function ($scope, localStorageService) {
 
@@ -7,6 +8,8 @@ ApplicationControllers.controller("HomeController", ["$scope", "localStorageServ
     $scope.selectedMonthArray = [];
     $scope.offset = 0;
     $scope.monthFilterSet = false;
+
+    $scope.write = false;
 
     $scope.clearFunc = function () {
         localStorageService.clearAll();
@@ -95,25 +98,56 @@ ApplicationControllers.controller("HomeController", ["$scope", "localStorageServ
     };
 
     $scope.clearResults = function () {
+        var logUsernameField = document.getElementById("loginUsernameField");
+        var logPasswordField = document.getElementById("loginPasswordField");
+
+        logUsernameField.value = "";
+        logPasswordField.value = "";
+
+        var regUsernameField = document.getElementById("registerUsernameField");
+        var regPasswordField = document.getElementById("registerPasswordField");
+
+        regUsernameField.value = "";
+        regPasswordField.value = "";
+
         $scope.registerResult = false;
         $scope.loginResult = false;
         $scope.registerResultString = "";
         $scope.loginResultString = "";
     };
 
+    $scope.clearWriteFields = function () {
+        var titleField = document.getElementById("pTitle");
+        var categoryField = document.getElementById("pCategory");
+        var textField = document.getElementById("pText");
+
+        titleField.value = "";
+        categoryField.value = "";
+        textField.value = "";
+
+    };
     $scope.writePost = function (postTitle, postCategory, postContent) {
-        var currentPost = {id: 4, title: postTitle, date: "April 2013", datecode: "apr2013", author: $scope.usr, category: postCategory, content: postContent};
-        $scope.posts.unshift(currentPost);
-        localStorageService.add("posts", $scope.posts);
+        $scope.clearWriteFields();
 
-        $scope.topPostsArray = $scope.posts.slice(0, 5);
+        if (postTitle && postCategory && postContent) {
+            $scope.writePostError="";
+            var currentPost = {id: 4, title: postTitle, date: "April 2013", datecode: "apr2013", author: $scope.usr, category: postCategory, content: postContent};
+            $scope.posts.unshift(currentPost);
+            localStorageService.add("posts", $scope.posts);
 
-        //$scope.counter++;
-        /* if($scope.topPostsArray.length == 5){
-         $scope.topPostsArray.splice($scope.topPostsArray.length-1,1);
-         }
-         $scope.topPostsArray.unshift(currentPost);*/
-        //localStorageService.add("topPosts", $scope.topPostsArray);
+            $scope.topPostsArray = $scope.posts.slice(0, 5);
+
+            $scope.write = false;//!$scope.write;
+
+        }
+        else {
+            $scope.writePostError = "Required fields are empty";
+            $scope.write = true;//!$scope.write;
+        }
+        $scope.postTitle="";
+        $scope.postCategory="";
+        $scope.postContent="";
+
     };
 
     $scope.writeAttempt = function () {

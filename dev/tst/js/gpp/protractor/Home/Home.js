@@ -25,8 +25,8 @@ describe("Given I have an open browser", function () {
 
         var testButtons;
         it("should have a login and register button", testButtons = function () {
-            var loginButton = ptor.findElement(protractor.By.name("loginButton"));
-            var registerButton = ptor.findElement(protractor.By.name("registerButton"));
+            var loginButton = ptor.findElement(protractor.By.id("loginButton"));
+            var registerButton = ptor.findElement(protractor.By.id("registerButton"));
 
             expect(loginButton.getTagName()).toBe("button");
             expect(registerButton.getTagName()).toBe("button");
@@ -38,8 +38,8 @@ describe("Given I have an open browser", function () {
 
         var testFields;
         it("should have 2 empty fields for login", testFields = function () {
-            var logUsernameField = ptor.findElement(protractor.By.name("loginUsernameField"));
-            var logPasswordField = ptor.findElement(protractor.By.name("loginPasswordField"));
+            var logUsernameField = ptor.findElement(protractor.By.id("loginUsernameField"));
+            var logPasswordField = ptor.findElement(protractor.By.id("loginPasswordField"));
             //expect(logUsernameField).toBeDefined();
             //expect(logPasswordField).toBeDefined();
 
@@ -51,7 +51,7 @@ describe("Given I have an open browser", function () {
 
         //TODO: move to unit testing ??
         xit("registered user should provide a valid email address", function () {
-            var userEmail = ptor.findElement(protractor.By.name("registerEmailField"));
+            var userEmail = ptor.findElement(protractor.By.id("registerEmailField"));
             var test = false;
 
             //userEmail.indexOf("f");
@@ -62,7 +62,7 @@ describe("Given I have an open browser", function () {
         });
 
         xit("should print 1 category for each post", function () {
-            var category = ptor.findElement(protractor.By.name("postCategory")).then(function (category) {
+            var category = ptor.findElement(protractor.By.id("postCategory")).then(function (category) {
                 expect(category.length).toEqual(1);
             });
             expect()
@@ -73,21 +73,21 @@ describe("Given I have an open browser", function () {
 
 
             it("should return an error message if the fields are empty", function () {
-                var loginButton = ptor.findElement(protractor.By.name("loginButton"));
+                var loginButton = ptor.findElement(protractor.By.id("loginButton"));
                 loginButton.click();
-                var loginResult = ptor.findElement(protractor.By.name("loginResult"));
+                var loginResult = ptor.findElement(protractor.By.id("loginResult"));
                 expect(loginResult.getText()).toBe("Required fields are empty");
             });
 
             it("should return an error message if the user is not registered", function () {
-                var userLoginField = ptor.findElement(protractor.By.name("loginUsernameField"));
+                var userLoginField = ptor.findElement(protractor.By.id("loginUsernameField"));
                 userLoginField.sendKeys("ci");
-                var passwordLoginField = ptor.findElement(protractor.By.name("loginPasswordField"));
+                var passwordLoginField = ptor.findElement(protractor.By.id("loginPasswordField"));
                 passwordLoginField.sendKeys("abc");
 
-                var loginButton = ptor.findElement(protractor.By.name("loginButton"));
+                var loginButton = ptor.findElement(protractor.By.id("loginButton"));
                 loginButton.click();
-                var loginResult = ptor.findElement(protractor.By.name("loginResult"));
+                var loginResult = ptor.findElement(protractor.By.id("loginResult"));
                 expect(loginResult.getText()).toBe("Invalid username or password");
 
             });
@@ -99,13 +99,13 @@ describe("Given I have an open browser", function () {
 
             it("should have 2 empty fields for register, one OK button, and one Cancel button ", function () {
 
-                var registerButton = ptor.findElement(protractor.By.name("registerButton"));
+                var registerButton = ptor.findElement(protractor.By.id("registerButton"));
                 registerButton.click();
 
-                var regUsernameField = ptor.findElement(protractor.By.name("registerUsernameField"));
-                var regPasswordField = ptor.findElement(protractor.By.name("registerPasswordField"));
-                var registerConfirmButton = ptor.findElement(protractor.By.name("registerConfirm"));
-                var registerCancelButton = ptor.findElement(protractor.By.name("registerCancel"));
+                var regUsernameField = ptor.findElement(protractor.By.id("registerUsernameField"));
+                var regPasswordField = ptor.findElement(protractor.By.id("registerPasswordField"));
+                var registerConfirmButton = ptor.findElement(protractor.By.id("registerConfirm"));
+                var registerCancelButton = ptor.findElement(protractor.By.id("registerCancel"));
 
                 expect(regUsernameField.getTagName()).toBe("input");
                 expect(regPasswordField.getTagName()).toBe("input");
@@ -116,29 +116,60 @@ describe("Given I have an open browser", function () {
 
             it("should return an error message if the fields are empty", function () {
 
-                var registerButton = ptor.findElement(protractor.By.name("registerConfirm"));
+                var registerButton = ptor.findElement(protractor.By.id("registerConfirm"));
                 registerButton.click();
-                var registerResult = ptor.findElement(protractor.By.name("registerResult"));
+                var registerResult = ptor.findElement(protractor.By.id("registerResult"));
                 expect(registerResult.getText()).toBe("Required fields are empty");
 
             });
 
 
             it("should print confirmation, write post button and welcome message if registration is successful, together with logout button", function() {
-                var userRegisterField = ptor.findElement(protractor.By.name("registerUsernameField"));
+                var userRegisterField = ptor.findElement(protractor.By.id("registerUsernameField"));
                 userRegisterField.sendKeys("ci");
-                var passwordRegisterField = ptor.findElement(protractor.By.name("registerPasswordField"));
+                var passwordRegisterField = ptor.findElement(protractor.By.id("registerPasswordField"));
                 passwordRegisterField.sendKeys("abc");
-                var registerConfirmButton = ptor.findElement(protractor.By.name("registerConfirm"));
+                var registerConfirmButton = ptor.findElement(protractor.By.id("registerConfirm"));
                 registerConfirmButton.click();
-                var registerResult = ptor.findElement(protractor.By.name("registerResult"));
+                var registerResult = ptor.findElement(protractor.By.id("registerResult"));
                 expect(registerResult.getText()).toBe("Registration was successful");
-                var welcomeText = ptor.findElement(protractor.By.name("welcomeText"));
-                var logoutButton = ptor.findElement(protractor.By.name("logoutButton"));
+                var welcomeText = ptor.findElement(protractor.By.id("welcomeText"));
+                var logoutButton = ptor.findElement(protractor.By.id("logoutButton"));
                 expect(welcomeText.getText()).toBe("Welcome ci!");
                 expect(logoutButton.getTagName()).toBe("button");
-                var writePost = ptor.findElement(protractor.By.name("writePost"));
+                var writePost = ptor.findElement(protractor.By.id("writePost"));
                 expect(writePost.getTagName()).toBe("button");
+
+            });
+
+            it("should return an error message if the username is already taken", function () {
+
+                var logoutButton = ptor.findElement(protractor.By.id("logoutButton"));
+                logoutButton.click();
+                var registerButton = ptor.findElement(protractor.By.id("registerButton"));
+                registerButton.click();
+
+                var userRegisterField = ptor.findElement(protractor.By.id("registerUsernameField"));
+                userRegisterField.sendKeys("ci");
+                var passwordRegisterField = ptor.findElement(protractor.By.id("registerPasswordField"));
+                passwordRegisterField.sendKeys("abcd");
+                var registerConfirmButton = ptor.findElement(protractor.By.id("registerConfirm"));
+                registerConfirmButton.click();
+                var registerResult = ptor.findElement(protractor.By.id("registerResult"));
+                expect(registerResult.getText()).toBe("Username already taken");
+
+                //test cancel also
+                var registerCancelButton = ptor.findElement(protractor.By.id("registerCancel"));
+                registerCancelButton.click();
+
+                var userLoginField = ptor.findElement(protractor.By.id("loginUsernameField"));
+                userLoginField.sendKeys("ci");
+                var passwordLoginField = ptor.findElement(protractor.By.id("loginPasswordField"));
+                passwordLoginField.sendKeys("abc");
+
+                var loginButton = ptor.findElement(protractor.By.id("loginButton"));
+                loginButton.click();
+
 
             });
 
@@ -147,15 +178,83 @@ describe("Given I have an open browser", function () {
 
         describe("When I click logout", function () {
             it("should show back the login screen and hide write ", function(){
-               var logoutButton = ptor.findElement(protractor.By.name("logoutButton"));
+               var logoutButton = ptor.findElement(protractor.By.id("logoutButton"));
                logoutButton.click();
                testButtons();
                testFields();
-               var writePost = ptor.findElement(protractor.By.name("writePost"));
+               var writePost = ptor.findElement(protractor.By.id("writePost"));
                expect(writePost.getText()).toBe("");
 
             });
+            it("should present user with empty login fields", function(){
+                var userLoginField = ptor.findElement(protractor.By.id("loginUsernameField"));
+                var passwordLoginField = ptor.findElement(protractor.By.id("loginPasswordField"));
+                expect(userLoginField.getAttribute('value')).toBe("");
+                expect(passwordLoginField.getAttribute('value')).toBe("");
+
+
+            });
         });
+
+        describe("When I login again", function () {
+            it("should successfully login the user and present the standard screen", function(){
+                var userLoginField = ptor.findElement(protractor.By.id("loginUsernameField"));
+                userLoginField.sendKeys("ci");
+                var passwordLoginField = ptor.findElement(protractor.By.id("loginPasswordField"));
+                passwordLoginField.sendKeys("abc");
+
+                var loginButton = ptor.findElement(protractor.By.id("loginButton"));
+                loginButton.click();
+                var loginResult = ptor.findElement(protractor.By.id("loginResult"));
+                expect(loginResult.getText()).toBe("Login was successful");
+
+            });
+
+        });
+
+        describe("When user clicks write post", function () {
+
+
+            it("should show empty post write fields", function(){
+                var writePostButton = ptor.findElement(protractor.By.id("writePost"));
+                writePostButton.click();
+                var postTitle = ptor.findElement(protractor.By.id("pTitle"));
+                var postCategory = ptor.findElement(protractor.By.id("pCategory"));
+                var postText = ptor.findElement(protractor.By.id("pText"));
+
+                expect(postTitle.getTagName()).toBe("input");
+                expect(postCategory.getTagName()).toBe("input");
+                expect(postText.getTagName()).toBe("textarea");
+
+            });
+
+            describe("When user confirms", function(){
+                it("should display post on the screen", function(){
+                    var postTitle = ptor.findElement(protractor.By.id("pTitle"));
+                    var postCategory = ptor.findElement(protractor.By.id("pCategory"));
+                    var postText = ptor.findElement(protractor.By.id("pText"));
+                    var writeOk = ptor.findElement(protractor.By.id("writeOk"));
+                    var writePostButton = ptor.findElement(protractor.By.id("writePost"));
+
+                    for (var i = 0; i < 4; i++) {
+                        postTitle.sendKeys("Test post " + i);
+                        postCategory.sendKeys("Technology");
+                        postText.sendKeys("I am writing a blog post");
+
+                        writeOk.click();
+                        writePostButton.click();
+                    }
+                    postTitle.sendKeys("Test post " + i);
+                    postCategory.sendKeys("Technology");
+                    postText.sendKeys("I am writing a blog post");
+
+                    writeOk.click();
+                });
+            });
+
+        });
+
+
 
 
     });
@@ -229,14 +328,11 @@ describe("Given I have an open browser", function () {
      */
 
 
-    // when logout, fields should become empty and no write post button should be present
-    // when user press register and enters same usrname, error message should be displayed
-    // when user presses login with same details, he should succesfully login and write post button present
-    // when user presses write post, fields should appear
+
+
     // NOT IMPLEMENTED: when user presses cancel, should go back to main screen
     // user presses write post, then completes fields and clicks ok
     // NOT IMPLEMENTED: if one field is empty, error message should appear
-    // otherwise, when user clicks ok, post should be added to the list (eg. list size bigger than 1?)
     // when month is selected, all div elements of class post should have corresponding month name
     // when show all is pressed, all posts should be present
 
@@ -256,35 +352,9 @@ describe("Given I have an open browser", function () {
 
          var nextButton = ptor.findElement(protractor.By.name("nextButton"));
          nextButton.click();*/
-        xit("should show between 1 and 5 posts", function () {
-            var registerButton = ptor.findElement(protractor.By.name("registerButton"));
-            registerButton.click();
-            var userRegisterField = ptor.findElement(protractor.By.name("registerUsernameField"));
-            userRegisterField.sendKeys("ci");
-            var passwordRegisterField = ptor.findElement(protractor.By.name("registerPasswordField"));
-            passwordRegisterField.sendKeys("abc");
-            var registerConfirmButton = ptor.findElement(protractor.By.name("registerConfirm"));
-            registerConfirmButton.click();
-            //scope.writePost("postTitle1", "postCategory","postContent");
-            //scope.writePost("postTitle2", "postCategory", "postContent");
-            //scope.writePost("postTitle3", "postCategory", "postContent");
+        it("should show between 1 and 5 posts", function () {
 
-            for (var i = 0; i < 4; i++) {
-                var writePostButton = ptor.findElement(protractor.By.name("writePost"));
-                writePostButton.click();
-                var postTitle = ptor.findElement(protractor.By.model("postTitle"));
-                postTitle.clear();
-                postTitle.sendKeys("Test post " + i);
-                var postCategory = ptor.findElement(protractor.By.model("postCategory"));
-                postCategory.clear();
-                postCategory.sendKeys("Technology");
-                var postText = ptor.findElement(protractor.By.model("postText"));
-                postText.clear();
-                postText.sendKeys("I am writing a blog post");
-                var writeOk = ptor.findElement(protractor.By.name("writeOk"));
-                writeOk.click();
-            }
-            var nextButton = ptor.findElement(protractor.By.name("nextButton"));
+            var nextButton = ptor.findElement(protractor.By.id("nextButton"));
             nextButton.click();
 
             ptor.findElements(protractor.By.className("post")).then(function (postElements) {
@@ -298,7 +368,7 @@ describe("Given I have an open browser", function () {
 
     describe("When user presses previous", function () {
         it("there should be between 1 and 5 posts", function () {
-            var previousButton = ptor.findElement(protractor.By.name("previousButton"));
+            var previousButton = ptor.findElement(protractor.By.id("previousButton"));
             previousButton.click();
             ptor.findElements(protractor.By.className("post")).then(function (postElements) {
                 expect(postElements.length).toBeGreaterThan(0);
