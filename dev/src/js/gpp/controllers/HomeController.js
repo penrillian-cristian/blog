@@ -8,7 +8,7 @@ ApplicationControllers.controller("HomeController", ["$scope", "localStorageServ
     $scope.selectedMonthArray = [];
     $scope.offset = 0;
     $scope.monthFilterSet = false;
-
+    $scope.id = 4;
     $scope.write = false;
 
     $scope.clearFunc = function () {
@@ -131,7 +131,8 @@ ApplicationControllers.controller("HomeController", ["$scope", "localStorageServ
 
         if (postTitle && postCategory && postContent) {
             $scope.writePostError="";
-            var currentPost = {id: 4, title: postTitle, date: "April 2013", datecode: "apr2013", author: $scope.usr, category: postCategory, content: postContent};
+            var currentPost = {id: $scope.id, title: postTitle, date: "April 2013", datecode: "apr2013", author: $scope.usr, category: postCategory, content: postContent};
+            $scope.id++;
             $scope.posts.unshift(currentPost);
             localStorageService.add("posts", $scope.posts);
 
@@ -202,6 +203,34 @@ ApplicationControllers.controller("HomeController", ["$scope", "localStorageServ
         }
         $scope.displayPosts();
 
+    };
+
+    $scope.deletePost = function(postId){
+
+        if ($scope.monthFilterSet) {
+            $scope.sizeLimit = $scope.selectedMonthArray.length;
+            $scope.arrayToDelete =  $scope.selectedMonthArray;
+
+
+            for (var i = 0; i < $scope.sizeLimit; i++) {
+                if($scope.arrayToDelete[i].id == postId){
+                    $scope.arrayToDelete.splice(i,1);
+                    break;
+                }
+            }
+
+        } else {
+            $scope.sizeLimit = $scope.posts.length;
+            $scope.arrayToDelete =  $scope.posts;
+        }
+
+        for (var i = 0; i < $scope.posts.length; i++) {
+            if($scope.posts[i].id == postId){
+                $scope.posts.splice(i,1);
+                break;
+            }
+        }
+        $scope.displayPosts();
     };
 
 

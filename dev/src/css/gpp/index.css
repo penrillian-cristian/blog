@@ -1,0 +1,19 @@
+.prevNext-footer{
+    margin: 5px auto 0;
+    width: 200px;
+    height: 80px;
+    color: #0a0a0a;
+    font-family:Arial;
+    font-size:15px;
+    font-weight:bold;
+    font-style:normal;
+    line-height:20px;
+    text-decoration:none;
+    text-align:center;
+    text-shadow:1px 1px 0px #528ecc;
+}
+
+
+input {
+    width: 220px
+}

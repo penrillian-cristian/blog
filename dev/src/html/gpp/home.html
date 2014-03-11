@@ -67,6 +67,7 @@
 
         <p class="blog-post-meta">{{post.date}} by <a href="#">{{post.author}}</a> in <i>{{post.category}}</i></p>
         <p>{{post.content}}</p>
+        <button id = "deletePost" ng-click="deletePost(post.id)" ng-show="post.author == usr && loginResult">Delete</button>
         <!--<p>This blog post shows a few different types of content that's supported and styled with Bootstrap.
             Basic typography, images, and code are all supported.</p>
         <hr>
@@ -175,24 +176,13 @@
          <p>Donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue.</p>
      </div><!-- /.blog-post -->
 
-    <ul class="pager">
 
-        <button id = "previousButton" ng-click="movePage('left')">Previous</button>
-        <button id = "nextButton" ng-click="movePage('right')">Next</button>
-
-    </ul>
 
 </div>
 <!-- /.blog-main -->
 
 <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
     <div class="login">
-        <style>
-
-            input {
-                width: 220px
-            }
-        </style>
 
         <!-- <form>
              <fieldset>
@@ -277,7 +267,14 @@
 
 </div>
 <!-- /.container -->
+<div class="prevNext-footer" ng-hide = "write">
+    <ul class="pager">
 
+        <button id = "previousButton" align ="center" ng-click="movePage('left')">Previous</button>
+        <button id = "nextButton" align="right"  ng-click="movePage('right')">Next</button>
+
+    </ul>
+</div>
 <div class="blog-footer">
     <p>Blog template built for <a href="http://getbootstrap.com">Bootstrap</a> by <a
             href="https://twitter.com/mdo">@mdo</a>.</p>
