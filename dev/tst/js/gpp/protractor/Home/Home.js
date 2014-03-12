@@ -97,18 +97,22 @@ describe("Given I have an open browser", function () {
         describe("When I click register", function () {
 
 
-            it("should have 2 empty fields for register, one OK button, and one Cancel button ", function () {
+            it("should have 3 empty fields for register, one OK button, and one Cancel button ", function () {
 
                 var registerButton = ptor.findElement(protractor.By.id("registerButton"));
                 registerButton.click();
 
                 var regUsernameField = ptor.findElement(protractor.By.id("registerUsernameField"));
                 var regPasswordField = ptor.findElement(protractor.By.id("registerPasswordField"));
+                var regEmailField = ptor.findElement(protractor.By.id("emailAddress"));
+
                 var registerConfirmButton = ptor.findElement(protractor.By.id("registerConfirm"));
                 var registerCancelButton = ptor.findElement(protractor.By.id("registerCancel"));
 
                 expect(regUsernameField.getTagName()).toBe("input");
                 expect(regPasswordField.getTagName()).toBe("input");
+                expect(regEmailField.getTagName()).toBe("input");
+
                 expect(registerConfirmButton.getTagName()).toBe("button");
                 expect(registerCancelButton.getTagName()).toBe("button");
 
@@ -116,19 +120,45 @@ describe("Given I have an open browser", function () {
 
             it("should return an error message if the fields are empty", function () {
 
-                var registerButton = ptor.findElement(protractor.By.id("registerConfirm"));
-                registerButton.click();
+                var registerConfirmButton = ptor.findElement(protractor.By.id("registerConfirm"));
+                registerConfirmButton.click();
                 var registerResult = ptor.findElement(protractor.By.id("registerResult"));
                 expect(registerResult.getText()).toBe("Required fields are empty");
 
             });
 
+            it("should print error message when email has wrong format",function(){
+              //  var logoutButton = ptor.findElement(protractor.By.id("logoutButton"));
+             //   logoutButton.click();
+             //   var registerButton = ptor.findElement(protractor.By.id("registerButton"));
+             //   registerButton.click();
+
+
+                var userRegisterField = ptor.findElement(protractor.By.id("registerUsernameField"));
+                userRegisterField.sendKeys("cisa");
+                var passwordRegisterField = ptor.findElement(protractor.By.id("registerPasswordField"));
+                passwordRegisterField.sendKeys("abcd");
+                var regEmailField = ptor.findElement(protractor.By.id("emailAddress"));
+                regEmailField.sendKeys("emailaaa.com");
+
+                var registerConfirmButton = ptor.findElement(protractor.By.id("registerConfirm"));
+                registerConfirmButton.click();
+                var registerResult = ptor.findElement(protractor.By.id("registerResult"));
+                expect(registerResult.getText()).toBe("Invalid email address");
+                userRegisterField.clear();
+                passwordRegisterField.clear();
+                regEmailField.clear();
+
+            });
 
             it("should print confirmation, write post button and welcome message if registration is successful, together with logout button", function() {
                 var userRegisterField = ptor.findElement(protractor.By.id("registerUsernameField"));
                 userRegisterField.sendKeys("ci");
                 var passwordRegisterField = ptor.findElement(protractor.By.id("registerPasswordField"));
                 passwordRegisterField.sendKeys("abc");
+                var regEmailField = ptor.findElement(protractor.By.id("emailAddress"));
+                regEmailField.sendKeys("email@aaa.com");
+
                 var registerConfirmButton = ptor.findElement(protractor.By.id("registerConfirm"));
                 registerConfirmButton.click();
                 var registerResult = ptor.findElement(protractor.By.id("registerResult"));
@@ -153,6 +183,9 @@ describe("Given I have an open browser", function () {
                 userRegisterField.sendKeys("ci");
                 var passwordRegisterField = ptor.findElement(protractor.By.id("registerPasswordField"));
                 passwordRegisterField.sendKeys("abcd");
+                var regEmailField = ptor.findElement(protractor.By.id("emailAddress"));
+                regEmailField.sendKeys("email@aaa.com");
+
                 var registerConfirmButton = ptor.findElement(protractor.By.id("registerConfirm"));
                 registerConfirmButton.click();
                 var registerResult = ptor.findElement(protractor.By.id("registerResult"));

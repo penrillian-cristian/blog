@@ -14,8 +14,9 @@
 <div class="blog-masthead">
     <div class="container">
         <nav class="blog-nav">
-            <a class="blog-nav-item active" href="#">Home</a>
-            <a class="blog-nav-item" href="#">New features</a>
+            <button class="blog-nav-item" href="#" ng-click="mainPage=true" style = "border: none;padding: 0;background: none; outline:0">Home &nbsp&nbsp</button>
+            <button class="blog-nav-item" href="#settings" ng-click="mainPage=false" style = "border: none;padding: 0;background: none; outline:0">Settings&nbsp</button>
+
             <a class="blog-nav-item" href="#">Press</a>
             <a class="blog-nav-item" href="#">New hires</a>
             <a class="blog-nav-item" href="#">About</a>
@@ -23,14 +24,19 @@
     </div>
 </div>
 
-<div class="container">
+<div ng-show="!mainPage && loginResult">
+    Change email: </br><input  id = "emailChange" ng-model="newEmail">
+    <button id = "emailOk" ng-click="updateEmail(newEmail);">Ok</button>
+</div>
+
+<div class="container" ng-show="mainPage">
 
 <div class="blog-header">
     <h1 class="blog-title">Welcome to our Blog</h1>
 
     <p class="lead blog-description">Welcome!</p>
 
-    <button id = "writePost" ng-click="writeAttempt(); write=true" ng-hide="!loginResult || write">Write new post</button>
+    <button id = "writePost" ng-click=" write=true" ng-hide="!loginResult || write">Write new post</button>
     <p>{{write}}</p>
 
     <button ng-click="clearFunc()">Clear Data</button>
@@ -68,6 +74,29 @@
         <p class="blog-post-meta">{{post.date}} by <a href="#">{{post.author}}</a> in <i>{{post.category}}</i></p>
         <p>{{post.content}}</p>
         <button id = "deletePost" ng-click="deletePost(post.id)" ng-show="post.author == usr && loginResult">Delete</button>
+        <button id = "editPost" ng-click="edit=true" ng-show="post.author == usr && loginResult">Edit</button>
+
+        <button id = "writeComment" ng-click="comment=true" ng-show ="loginResult && !comment">Write a comment</button>
+        <div id="commentForm" ng-show="comment">
+            <dl>
+                <dt><textarea id = "commentText" rows="10" cols="50" ng-model="commentText"></textarea></dt>
+                <dt><button id = "writeCommentOk" ng-click="comment=false; isCommentText = true; writeComment(commentText, post.id)">Ok</button>
+                    <button id = "cancelWriteComment" ng-click="comment=false">Cancel</button></dt>
+            </dl>
+        </div>
+
+
+        <div id = "commentContent">
+            {{post.commentText}}
+        </div>
+
+        <div ng-show="edit">
+            </br><textarea id = "editedPost" rows="10" cols="50">{{post.content}}</textarea>
+            <button id = "editPostOk" ng-click="editPost(post.id); edit = false">Ok</button>
+        </div>
+        <br>
+        <br>
+
         <!--<p>This blog post shows a few different types of content that's supported and styled with Bootstrap.
             Basic typography, images, and code are all supported.</p>
         <hr>
@@ -115,7 +144,14 @@
 
 
     </div>
+    <div class="prevNext-footer" ng-hide = "write">
+        <ul class="pager">
 
+            <button id = "previousButton" align ="center" ng-click="movePage('left')">Previous</button>
+            <button id = "nextButton" align="right"  ng-click="movePage('right')">Next</button>
+
+        </ul>
+    </div>
 
     <!-- <div class="blog-post">
          <h2 class="blog-post-title">Sample blog post</h2>
@@ -202,8 +238,9 @@
 
         <div id="registerForm" ng-show="pressed && !registerResult && !loginResult">
             username: <input id="registerUsernameField" ng-model="username">
-            password: <input id="registerPasswordField" ng-model="password">
-            <button id="registerConfirm" ng-click="register(username,password)">Ok</button>
+            password: <input id="registerPasswordField" type = "password" ng-model="password">
+            email:    <input id="emailAddress" ng-model="email">
+            <button id="registerConfirm" ng-click="register(username,password, email)">Ok</button>
             <button id="registerCancel" ng-click="pressed=!pressed;clearResults()"> Cancel</button>
 
         </div>
@@ -211,7 +248,7 @@
 
         <div id="loginForm" ng-show="!pressed && !registerResult && !loginResult">
             username: <input id="loginUsernameField" ng-model="user">
-            password: <input id="loginPasswordField" ng-model="pass">
+            password: <input id="loginPasswordField" type = "password" ng-model="pass">
             <button id="loginButton" ng-click="login(user,pass)">Login</button>
             <button id="registerButton" ng-click="pressed=!pressed"> Register</button>
 
@@ -267,20 +304,13 @@
 
 </div>
 <!-- /.container -->
-<div class="prevNext-footer" ng-hide = "write">
-    <ul class="pager">
 
-        <button id = "previousButton" align ="center" ng-click="movePage('left')">Previous</button>
-        <button id = "nextButton" align="right"  ng-click="movePage('right')">Next</button>
-
-    </ul>
-</div>
 <div class="blog-footer">
     <p>Blog template built for <a href="http://getbootstrap.com">Bootstrap</a> by <a
             href="https://twitter.com/mdo">@mdo</a>.</p>
 
     <p>
-        <a href="#top">Back to top</a>
+        <a href="/dev/src/#/home/#top">Back to top</a>
     </p>
 </div>
 

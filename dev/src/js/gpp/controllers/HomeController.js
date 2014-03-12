@@ -10,6 +10,9 @@ ApplicationControllers.controller("HomeController", ["$scope", "localStorageServ
     $scope.monthFilterSet = false;
     $scope.id = 4;
     $scope.write = false;
+    $scope.commentPressed = false;
+    $scope.isCommentText = false;
+    $scope.mainPage = true;
 
     $scope.clearFunc = function () {
         localStorageService.clearAll();
@@ -19,9 +22,9 @@ ApplicationControllers.controller("HomeController", ["$scope", "localStorageServ
         $scope.posts = localStorageService.get("posts");
     } else {
         $scope.posts = [
-            {id: 1, title: "Post from February", date: "February 2014", datecode: "feb2014", author: "Filip Machinia", category: "Technology", content: "This is the first blog post"},
-            {id: 2, title: "Post from March", date: "March 2013", datecode: "mar2013", author: "Cristian Ivascu", category: "Technology", content: "This is the second blog post"},
-            {id: 3, title: "Post from March", date: "March 2013", datecode: "mar2013", author: "Chris Allison", category: "Media", content: "This is the third blog post"}
+            {id: 1, title: "Post from February", date: "February 2014", datecode: "feb2014", author: "Filip Machinia", category: "Technology", content: "This is the first blog post", commentText: ""},
+            {id: 2, title: "Post from March", date: "March 2013", datecode: "mar2013", author: "Cristian Ivascu", category: "Technology", content: "This is the second blog post", commentText: ""},
+            {id: 3, title: "Post from March", date: "March 2013", datecode: "mar2013", author: "Chris Allison", category: "Media", content: "This is the third blog post", commentText: ""}
         ];
     }
 
@@ -34,24 +37,23 @@ ApplicationControllers.controller("HomeController", ["$scope", "localStorageServ
     };
     $scope.displayPosts();
 
-    /*[
-     {id: 1, title: "Post from February", date: "February 2014", datecode: "feb2014", author: "Filip Machinia", category: "technology", content: "This is the first blog post"},
-     {id: 2, title: "Post from March", date: "March 2013", datecode: "mar2013", author: "Cristian Ivascu", category: "technology", content: "This is the second blog post"},
-     {id: 3, title: "Post from March", date: "March 2013", datecode: "mar2013", author: "Chris Allison", category: "technology", content: "This is the third blog post"}
-     ];*/
 
-
-    $scope.register = function (username, password) {
+    $scope.register = function (username, password, email) {
         $scope.loginResultString = "";
         $scope.registerResultString = "";
         $scope.registerResult = false;
 
-        if (!username || !password) {
+        if (!username || !password || !email) {
             $scope.registerResultString = "Required fields are empty";
             $scope.registerResult = false;
         }
         else {
 
+            if (!$scope.emailCheck(email)) {
+                $scope.registerResultString = "Invalid email address";
+                $scope.registerResult = false;
+                return;
+            }
 
             if (localStorageService.get(username)) {
                 $scope.registerResultString = "Username already taken";
@@ -66,7 +68,12 @@ ApplicationControllers.controller("HomeController", ["$scope", "localStorageServ
             $scope.registerResult = true;
             $scope.loginResult = true;
             $scope.usr = username;
+
+            $scope.username = "";
+            $scope.password = "";
+            $scope.email = "";
         }
+
 
     };
 
@@ -87,6 +94,8 @@ ApplicationControllers.controller("HomeController", ["$scope", "localStorageServ
                 $scope.loginResultString = "Login was successful";
                 $scope.loginResult = true;
                 $scope.usr = user;
+                $scope.user = "";
+                $scope.pass = "";
 
             } else {
                 $scope.loginResultString = "Invalid username or password";
@@ -95,6 +104,11 @@ ApplicationControllers.controller("HomeController", ["$scope", "localStorageServ
 
 
         }
+
+    };
+
+    $scope.updateEmail = function (email) {
+        email = 5;
     };
 
     $scope.clearResults = function () {
@@ -127,10 +141,10 @@ ApplicationControllers.controller("HomeController", ["$scope", "localStorageServ
 
     };
     $scope.writePost = function (postTitle, postCategory, postContent) {
-        $scope.clearWriteFields();
+
 
         if (postTitle && postCategory && postContent) {
-            $scope.writePostError="";
+            $scope.writePostError = "";
             var currentPost = {id: $scope.id, title: postTitle, date: "April 2013", datecode: "apr2013", author: $scope.usr, category: postCategory, content: postContent};
             $scope.id++;
             $scope.posts.unshift(currentPost);
@@ -139,25 +153,30 @@ ApplicationControllers.controller("HomeController", ["$scope", "localStorageServ
             $scope.topPostsArray = $scope.posts.slice(0, 5);
 
             $scope.write = false;//!$scope.write;
-
+            $scope.clearWriteFields();
+            $scope.postTitle = "";
+            $scope.postCategory = "";
+            $scope.postContent = "";
         }
         else {
             $scope.writePostError = "Required fields are empty";
             $scope.write = true;//!$scope.write;
         }
-        $scope.postTitle="";
-        $scope.postCategory="";
-        $scope.postContent="";
+
 
     };
 
-    $scope.writeAttempt = function () {
-        //$scope.writeAttempResultString = "";
-        if (!$scope.loginResult) {
-            $scope.writeAttemptResultString = "You must be logged in to write posts";
-        } else {
-            $scope.writepost = !$scope.writepost;
-            $scope.writeAttemptResultString = "";
+    $scope.editPost = function (userID) {
+        var editedText = document.getElementById("editedPost").value;
+        if (editedText) {
+
+            for (var j = 0; j < $scope.posts.length; j++) {
+                if ($scope.posts[j].id === userID) {
+                    $scope.posts[j].content = editedText;
+                    localStorageService.add("posts", $scope.posts);
+                    break;
+                }
+            }
         }
     };
 
@@ -205,32 +224,48 @@ ApplicationControllers.controller("HomeController", ["$scope", "localStorageServ
 
     };
 
-    $scope.deletePost = function(postId){
+    $scope.deletePost = function (postId) {
 
         if ($scope.monthFilterSet) {
             $scope.sizeLimit = $scope.selectedMonthArray.length;
-            $scope.arrayToDelete =  $scope.selectedMonthArray;
+            $scope.arrayToDelete = $scope.selectedMonthArray;
 
 
             for (var i = 0; i < $scope.sizeLimit; i++) {
-                if($scope.arrayToDelete[i].id == postId){
-                    $scope.arrayToDelete.splice(i,1);
+                if ($scope.arrayToDelete[i].id === postId) {
+                    $scope.arrayToDelete.splice(i, 1);
                     break;
                 }
             }
 
         } else {
             $scope.sizeLimit = $scope.posts.length;
-            $scope.arrayToDelete =  $scope.posts;
+            $scope.arrayToDelete = $scope.posts;
         }
 
-        for (var i = 0; i < $scope.posts.length; i++) {
-            if($scope.posts[i].id == postId){
-                $scope.posts.splice(i,1);
+        for (var j = 0; j < $scope.posts.length; j++) {
+            if ($scope.posts[j].id === postId) {
+                $scope.posts.splice(j, 1);
+                localStorageService.add("posts", $scope.posts);
                 break;
             }
         }
         $scope.displayPosts();
+    };
+
+    $scope.writeComment = function (text, id) {
+        for (var j = 0; j < $scope.posts.length; j++) {
+            if ($scope.posts[j].id === id) {
+                $scope.posts[j].commentText = $scope.usr + " says: " + "'" + text + "'";
+                localStorageService.add("posts", $scope.posts);
+                break;
+            }
+        }
+    };
+
+    $scope.emailCheck = function (userMail) {
+        var validFormat = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return validFormat.test(userMail);
     };
 
 

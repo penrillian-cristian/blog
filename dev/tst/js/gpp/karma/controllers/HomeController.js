@@ -53,20 +53,20 @@ describe("Controllers", function () {
         });
 
         it("should store login and password", function () {
-            scope.register("username", "password");
+            scope.register("username", "password", "me@example.com");
             expect(scope.registerResultString).toEqual("Registration was successful");
 
             //expect(scope.localStorageService.getpassword).toEqual("password");
 
-            scope.register("username1", "password1");
+            scope.register("username1", "password1", "me@example.com");
             scope.login("username1","password1");
             expect(scope.loginResultString).toBe("Login was successful");
 
-            scope.register("username2", "password2");
+            scope.register("username2", "password2", "me@example.com");
             scope.login("username2","password2");
             expect(scope.loginResultString).toBe("Login was successful");
 
-            scope.register("username3", "password3");
+            scope.register("username3", "password3", "me@example.com");
             scope.login("username3","password3");
             expect(scope.loginResultString).toBe("Login was successful");
 
@@ -90,58 +90,58 @@ describe("Controllers", function () {
         });
 
         it("should print 'Invalid username or password' when username or password don't match values from database", function () {
-            scope.register("username1", "password2");
+            scope.register("username1", "password2", "me@example.com");
             scope.login("username2", "password2");
             expect(scope.loginResultString).toEqual("Invalid username or password");
         });
 
         xit("should print 'Password must have at least 8 characters' when user wants to register", function () {
-            scope.register("username", "pass");
+            scope.register("username", "pass", "me@example.com");
             expect(scope.output).toEqual("Password must have at least 8 characters");
 
-            scope.register("username", "p");
+            scope.register("username", "p", "me@example.com");
             expect(scope.output).toEqual("Password must have at least 8 characters");
 
-            scope.register("username", "passwor");
+            scope.register("username", "passwor", "me@example.com");
             expect(scope.output).toEqual("Password must have at least 8 characters");
 
-            scope.register("username", "1234567");
+            scope.register("username", "1234567", "me@example.com");
             expect(scope.output).toEqual("Password must have at least 8 characters");
 
-            scope.register("username", "<>:@{}_");
+            scope.register("username", "<>:@{}_", "me@example.com");
             expect(scope.output).toEqual("Password must have at least 8 characters");
         });
 
         xit("should print 'Email has wrong format' when there is no '@' or '.' symbol", function () {
-            scope.register("username", "password", "email@com");
+            scope.register("username", "password", "email@com", "me@example.com");
             expect(scope.result).toEqual("Email has wrong format");
 
-            scope.register("username", "password", "email.com");
+            scope.register("username", "password", "email.com", "me@example.com");
             expect(scope.result).toEqual("Email has wrong format");
 
-            scope.register("username", "password", "emailcom");
+            scope.register("username", "password", "emailcom", "me@example.com");
             expect(scope.result).toEqual("Email has wrong format");
         });
 
         it("should print 'Login was successful' when user login successfully", function () {
-            scope.register("username", "password");
+            scope.register("username", "password", "me@example.com");
             scope.login("username", "password");
             expect(scope.loginResultString).toEqual("Login was successful");
 
-            scope.register("username1", "password1");
-            scope.register("username2", "password2");
-            scope.register("username3", "password3");
+            scope.register("username1", "password1", "me@example.com");
+            scope.register("username2", "password2", "me@example.com");
+            scope.register("username3", "password3", "me@example.com");
             scope.login("username2", "password2");
             expect(scope.loginResultString).toEqual("Login was successful");
         });
 
         it("should print 'Username already taken' when user tries to register with username being already used", function () {
-            scope.register("username1", "password1");
-            scope.register("username1", "password2");
+            scope.register("username1", "password1", "me@example.com");
+            scope.register("username1", "password2", "me@example.com");
             expect(scope.registerResultString).toEqual("Username already taken");
 
-            scope.register("username2", "password3");
-            scope.register("username2", "password3");
+            scope.register("username2", "password3", "me@example.com");
+            scope.register("username2", "password3", "me@example.com");
             expect(scope.registerResultString).toEqual("Username already taken");
         });
 
