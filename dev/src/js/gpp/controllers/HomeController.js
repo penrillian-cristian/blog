@@ -14,6 +14,16 @@ ApplicationControllers.controller("HomeController", ["$scope", "localStorageServ
     $scope.isCommentText = false;
     $scope.mainPage = true;
 
+    //$scope.months = ["February 2014","January 2014","December 2013","November 2013","October 2013","September 2013","August 2013","July 2013","June 2013","May 2013","April 2013","March 2013"];
+
+
+    if (localStorageService.get("months")) {
+        $scope.months = localStorageService.get("months");
+    } else {
+        $scope.months = ["February 2014", "January 2014", "December 2013", "November 2013", "October 2013", "September 2013", "August 2013", "July 2013", "June 2013", "May 2013", "April 2013", "March 2013"];
+        localStorageService.add("months", $scope.months);
+    }
+
     $scope.clearFunc = function () {
         localStorageService.clearAll();
     };
@@ -22,9 +32,9 @@ ApplicationControllers.controller("HomeController", ["$scope", "localStorageServ
         $scope.posts = localStorageService.get("posts");
     } else {
         $scope.posts = [
-            {id: 1, title: "Post from February", date: "February 2014", datecode: "feb2014", author: "Filip Machinia", category: "Technology", content: "This is the first blog post", commentText: ""},
-            {id: 2, title: "Post from March", date: "March 2013", datecode: "mar2013", author: "Cristian Ivascu", category: "Technology", content: "This is the second blog post", commentText: ""},
-            {id: 3, title: "Post from March", date: "March 2013", datecode: "mar2013", author: "Chris Allison", category: "Media", content: "This is the third blog post", commentText: ""}
+            {id: 1, title: "Post from February", date: "February 2014", datecode: "February 2014", author: "Filip Machinia", category: "Technology", content: "This is the first blog post", commentText: ""},
+            {id: 2, title: "Post from March", date: "March 2013", datecode: "March 2013", author: "Cristian Ivascu", category: "Technology", content: "This is the second blog post", commentText: ""},
+            {id: 3, title: "Post from March", date: "March 2013", datecode: "March 2013", author: "Chris Allison", category: "Media", content: "This is the third blog post", commentText: ""}
         ];
     }
 
@@ -142,10 +152,17 @@ ApplicationControllers.controller("HomeController", ["$scope", "localStorageServ
     };
     $scope.writePost = function (postTitle, postCategory, postContent) {
 
+        var date = new Date();
+        var dateString = $scope.monthMapping(date.getMonth()) + " " + date.getFullYear();
+        if (localStorageService.get("months")[0] !== dateString) {
+            $scope.months.unshift(dateString);
+            $scope.months.splice($scope.months.length - 1, 1);
+            localStorageService.add("months", $scope.months);
+        }
 
         if (postTitle && postCategory && postContent) {
             $scope.writePostError = "";
-            var currentPost = {id: $scope.id, title: postTitle, date: "April 2013", datecode: "apr2013", author: $scope.usr, category: postCategory, content: postContent};
+            var currentPost = {id: $scope.id, title: postTitle, date: date.getDate() + " " + dateString, datecode: dateString, author: $scope.usr, category: postCategory, content: postContent};
             $scope.id++;
             $scope.posts.unshift(currentPost);
             localStorageService.add("posts", $scope.posts);
@@ -167,17 +184,19 @@ ApplicationControllers.controller("HomeController", ["$scope", "localStorageServ
     };
 
     $scope.editPost = function (userID) {
-        var editedText = document.getElementById("editedPost").value;
-        if (editedText) {
+        var editedText = document.getElementById(userID).value;
+        //if (editedText.length) {
 
-            for (var j = 0; j < $scope.posts.length; j++) {
-                if ($scope.posts[j].id === userID) {
-                    $scope.posts[j].content = editedText;
-                    localStorageService.add("posts", $scope.posts);
-                    break;
-                }
+        for (var j = 0; j < $scope.posts.length; j++) {
+            if ($scope.posts[j].id === userID) {
+                $scope.posts[j].content = editedText;
+                localStorageService.add("posts", $scope.posts);
+                break;
             }
         }
+        $scope.userID="";
+        //}
+        //editedText = "";
     };
 
     $scope.setMonth = function (month) {
@@ -266,6 +285,51 @@ ApplicationControllers.controller("HomeController", ["$scope", "localStorageServ
     $scope.emailCheck = function (userMail) {
         var validFormat = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return validFormat.test(userMail);
+    };
+
+    $scope.monthMapping = function (monthNumber) {
+        var monthString;
+        switch (monthNumber) {
+            case 0:
+                monthString = "January";
+                break;
+            case 1:
+                monthString = "February";
+                break;
+            case 2:
+                monthString = "March";
+                break;
+            case 3:
+                monthString = "April";
+                break;
+            case 4:
+                monthString = "May";
+                break;
+            case 5:
+                monthString = "June";
+                break;
+            case 6:
+                monthString = "July";
+                break;
+            case 7:
+                monthString = "August";
+                break;
+            case 8:
+                monthString = "September";
+                break;
+            case 9:
+                monthString = "October";
+                break;
+            case 10:
+                monthString = "November";
+                break;
+            case 11:
+                monthString = "December";
+                break;
+
+        }
+
+        return monthString;
     };
 
 

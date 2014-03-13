@@ -71,7 +71,7 @@
 
         <h2 class="blog-post-title">{{post.title}}</h2>
 
-        <p class="blog-post-meta">{{post.date}} by <a href="#">{{post.author}}</a> in <i>{{post.category}}</i></p>
+        <p class="blog-post-meta">{{post.date}} by <a href="#">{{post.author}}</a> in <i>{{post.category}}</i> with id {{post.id}}</p>
         <p>{{post.content}}</p>
         <button id = "deletePost" ng-click="deletePost(post.id)" ng-show="post.author == usr && loginResult">Delete</button>
         <button id = "editPost" ng-click="edit=true" ng-show="post.author == usr && loginResult">Edit</button>
@@ -91,59 +91,15 @@
         </div>
 
         <div ng-show="edit">
-            </br><textarea id = "editedPost" rows="10" cols="50">{{post.content}}</textarea>
+            </br><textarea id = {{post.id}} rows="10" cols="50">{{post.content}}</textarea>
+            <p>{{post.content}}</p>
             <button id = "editPostOk" ng-click="editPost(post.id); edit = false">Ok</button>
         </div>
         <br>
         <br>
 
-        <!--<p>This blog post shows a few different types of content that's supported and styled with Bootstrap.
-            Basic typography, images, and code are all supported.</p>
-        <hr>
-        <p>Cum sociis natoque penatibus et magnis <a href="#">dis parturient montes</a>, nascetur ridiculus mus.
-            Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Sed posuere
-            consectetur est at lobortis. Cras mattis consectetur purus sit amet fermentum.</p>
-        <blockquote>
-            <p>Curabitur blandit tempus porttitor. <strong>Nullam quis risus eget urna mollis</strong> ornare
-                vel eu leo. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-        </blockquote>
-        <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet
-            fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
-
-        <h2>Heading</h2>
-
-        <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo
-            luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Morbi leo risus, porta ac
-            consectetur ac, vestibulum at eros.</p>
-
-        <h3>Sub-heading</h3>
-
-        <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
-        <pre><code>Example code block</code></pre>
-        <p>Aenean lacinia bibendum nulla sed consectetur. Etiam porta sem malesuada magna mollis euismod. Fusce
-            dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa.</p>
-
-        <h3>Sub-heading</h3>
-
-        <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean lacinia
-            bibendum nulla sed consectetur. Etiam porta sem malesuada magna mollis euismod. Fusce dapibus,
-            tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet
-            risus.</p>
-        <ul>
-            <li>Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</li>
-            <li>Donec id elit non mi porta gravida at eget metus.</li>
-            <li>Nulla vitae elit libero, a pharetra augue.</li>
-        </ul>
-        <p>Donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue.</p>
-        <ol>
-            <li>Vestibulum id ligula porta felis euismod semper.</li>
-            <li>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</li>
-            <li>Maecenas sed diam eget risus varius blandit sit amet non magna.</li>
-        </ol>
-        <p>Cras mattis consectetur purus sit amet fermentum. Sed posuere consectetur est at lobortis.</p>-->
-
-
     </div>
+
     <div class="prevNext-footer" ng-hide = "write">
         <ul class="pager">
 
@@ -152,67 +108,6 @@
 
         </ul>
     </div>
-
-    <!-- <div class="blog-post">
-         <h2 class="blog-post-title">Sample blog post</h2>
-         <p class="blog-post-meta">January 1, 2014 by <a href="#">Mark</a></p>
-
-         <p>This blog post shows a few different types of content that's supported and styled with Bootstrap. Basic typography, images, and code are all supported.</p>
-         <hr>
-         <p>Cum sociis natoque penatibus et magnis <a href="#">dis parturient montes</a>, nascetur ridiculus mus. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Sed posuere consectetur est at lobortis. Cras mattis consectetur purus sit amet fermentum.</p>
-         <blockquote>
-             <p>Curabitur blandit tempus porttitor. <strong>Nullam quis risus eget urna mollis</strong> ornare vel eu leo. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-         </blockquote>
-         <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
-         <h2>Heading</h2>
-         <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
-         <h3>Sub-heading</h3>
-         <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
-         <pre><code>Example code block</code></pre>
-         <p>Aenean lacinia bibendum nulla sed consectetur. Etiam porta sem malesuada magna mollis euismod. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa.</p>
-         <h3>Sub-heading</h3>
-         <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean lacinia bibendum nulla sed consectetur. Etiam porta sem malesuada magna mollis euismod. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-         <ul>
-             <li>Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</li>
-             <li>Donec id elit non mi porta gravida at eget metus.</li>
-             <li>Nulla vitae elit libero, a pharetra augue.</li>
-         </ul>
-         <p>Donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue.</p>
-         <ol>
-             <li>Vestibulum id ligula porta felis euismod semper.</li>
-             <li>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</li>
-             <li>Maecenas sed diam eget risus varius blandit sit amet non magna.</li>
-         </ol>
-         <p>Cras mattis consectetur purus sit amet fermentum. Sed posuere consectetur est at lobortis.</p>
-     </div>
-
-     <div class="blog-post">
-         <h2 class="blog-post-title">Another blog post</h2>
-         <p class="blog-post-meta">December 23, 2013 by <a href="#">Jacob</a></p>
-
-         <p>Cum sociis natoque penatibus et magnis <a href="#">dis parturient montes</a>, nascetur ridiculus mus. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Sed posuere consectetur est at lobortis. Cras mattis consectetur purus sit amet fermentum.</p>
-         <blockquote>
-             <p>Curabitur blandit tempus porttitor. <strong>Nullam quis risus eget urna mollis</strong> ornare vel eu leo. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-         </blockquote>
-         <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
-         <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
-     </div>
-
-     <div class="blog-post">
-         <h2 class="blog-post-title">New feature</h2>
-         <p class="blog-post-meta">December 14, 2013 by <a href="#">Chris</a></p>
-
-         <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean lacinia bibendum nulla sed consectetur. Etiam porta sem malesuada magna mollis euismod. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-         <ul>
-             <li>Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</li>
-             <li>Donec id elit non mi porta gravida at eget metus.</li>
-             <li>Nulla vitae elit libero, a pharetra augue.</li>
-         </ul>
-         <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
-         <p>Donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue.</p>
-     </div><!-- /.blog-post -->
-
-
 
 </div>
 <!-- /.blog-main -->
@@ -270,18 +165,22 @@
         <h4>Archives</h4>
         <ol class="list-unstyled">
             <li> <button ng-click="allDisplayed()" style = "border: none;padding: 0;background: none; outline:0">See all</button></li>
-            <li> <button ng-click="setMonth('feb2014');" style = "border: none;padding: 0;background: none; outline:0">February 2014</button></li>
-            <li> <button ng-click="setMonth('jan2014');" style = "border: none;padding: 0;background: none; outline:0">January 2014</button></li>
-            <li> <button ng-click="setMonth('dec2013');" style = "border: none;padding: 0;background: none; outline:0">December 2013</button></li>
-            <li> <button ng-click="setMonth('nov2013');" style = "border: none;padding: 0;background: none; outline:0">November 2013</button></li>
-            <li> <button ng-click="setMonth('oct2013');" style = "border: none;padding: 0;background: none; outline:0">October 2013</button></li>
-            <li> <button ng-click="setMonth('sep2013');" style = "border: none;padding: 0;background: none; outline:0">September 2013</button></li>
-            <li> <button ng-click="setMonth('aug2013');" style = "border: none;padding: 0;background: none; outline:0">August 2013</button></li>
-            <li> <button ng-click="setMonth('jul2013');" style = "border: none;padding: 0;background: none; outline:0">July 2013</button></li>
-            <li> <button ng-click="setMonth('jun2013');" style = "border: none;padding: 0;background: none; outline:0">June 2013</button></li>
-            <li> <button ng-click="setMonth('may2013');" style = "border: none;padding: 0;background: none; outline:0">May 2013</button></li>
-            <li> <button ng-click="setMonth('apr2013');" style = "border: none;padding: 0;background: none; outline:0">April 2013</button></li>
-            <li> <button ng-click="setMonth('mar2013');" style = "border: none;padding: 0;background: none; outline:0">March 2013</button></li>
+            <li ng-repeat="month in months"> <button ng-click="setMonth(month);" style = "border: none;padding: 0;background: none; outline:0">{{month}}</button></li>
+
+
+           <!-- <li> <button ng-click="setMonth('March2014');" style = "border: none;padding: 0;background: none; outline:0">March 2014</button></li>
+            <li> <button ng-click="setMonth('February2014');" style = "border: none;padding: 0;background: none; outline:0">February 2014</button></li>
+            <li> <button ng-click="setMonth('January2014');" style = "border: none;padding: 0;background: none; outline:0">January 2014</button></li>
+            <li> <button ng-click="setMonth('December2013');" style = "border: none;padding: 0;background: none; outline:0">December 2013</button></li>
+            <li> <button ng-click="setMonth('November2013');" style = "border: none;padding: 0;background: none; outline:0">November 2013</button></li>
+            <li> <button ng-click="setMonth('October2013');" style = "border: none;padding: 0;background: none; outline:0">October 2013</button></li>
+            <li> <button ng-click="setMonth('September2013');" style = "border: none;padding: 0;background: none; outline:0">September 2013</button></li>
+            <li> <button ng-click="setMonth('August2013');" style = "border: none;padding: 0;background: none; outline:0">August 2013</button></li>
+            <li> <button ng-click="setMonth('July2013');" style = "border: none;padding: 0;background: none; outline:0">July 2013</button></li>
+            <li> <button ng-click="setMonth('June2013');" style = "border: none;padding: 0;background: none; outline:0">June 2013</button></li>
+            <li> <button ng-click="setMonth('May2013');" style = "border: none;padding: 0;background: none; outline:0">May 2013</button></li>
+            <li> <button ng-click="setMonth('April2013');" style = "border: none;padding: 0;background: none; outline:0">April 2013</button></li>
+            <li> <button ng-click="setMonth('March2013');" style = "border: none;padding: 0;background: none; outline:0">March 2013</button></li>-->
         </ol>
     </div>
     <div class="sidebar-module">
