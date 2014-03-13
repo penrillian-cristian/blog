@@ -410,7 +410,26 @@ describe("Given I have an open browser", function () {
         });
 
     });
+    xdescribe("When user clicks on the month", function(){
+        it("should only show posts in that month",function(){
+            var monthButton = ptor.findElement(protractor.By.id("March 2014"));
+            monthButton.click();
 
+            ptor.findElements(protractor.By.className("post")).then(function (postElements) {
+
+                for(var i =0; i< postElements.length;i++){
+                    var monthBox = ptor.findElement(protractor.By.id("theMonth"));
+                    expect(postElements[i]).toBe("March 2014");
+                }
+
+
+            });
+        });
+
+        it("should show the same or a lower number of posts as the total",function(){
+
+        });
+    })
 
     // });
 });

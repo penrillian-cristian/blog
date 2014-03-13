@@ -37,7 +37,7 @@
     <p class="lead blog-description">Welcome!</p>
 
     <button id = "writePost" ng-click=" write=true" ng-hide="!loginResult || write">Write new post</button>
-    <p>{{write}}</p>
+   
 
     <button ng-click="clearFunc()">Clear Data</button>
     <p>{{writeAttemptResultString}}</p>
@@ -164,8 +164,8 @@
     <div class="sidebar-module">
         <h4>Archives</h4>
         <ol class="list-unstyled">
-            <li> <button ng-click="allDisplayed()" style = "border: none;padding: 0;background: none; outline:0">See all</button></li>
-            <li ng-repeat="month in months"> <button ng-click="setMonth(month);" style = "border: none;padding: 0;background: none; outline:0">{{month}}</button></li>
+            <li> <button id="seeAllMonths" ng-click="allDisplayed()" style = "border: none;padding: 0;background: none; outline:0">See all</button></li>
+            <li ng-repeat="month in months"> <button id={{month}} ng-click="setMonth(month);" style = "border: none;padding: 0;background: none; outline:0">{{month}}</button></li>
 
 
            <!-- <li> <button ng-click="setMonth('March2014');" style = "border: none;padding: 0;background: none; outline:0">March 2014</button></li>
