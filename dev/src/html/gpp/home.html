@@ -37,7 +37,7 @@
     <p class="lead blog-description">Welcome!</p>
 
     <button id = "writePost" ng-click=" write=true" ng-hide="!loginResult || write">Write new post</button>
-   
+
 
     <button ng-click="clearFunc()">Clear Data</button>
     <p>{{writeAttemptResultString}}</p>
@@ -71,7 +71,7 @@
 
         <h2 class="blog-post-title">{{post.title}}</h2>
 
-        <p class="blog-post-meta">{{post.date}} by <a href="#">{{post.author}}</a> in <i>{{post.category}}</i> with id {{post.id}}</p>
+        <p class="blog-post-meta"><b id = "theMonth"> {{post.date}}</b> by <a href="#">{{post.author}}</a> in <i>{{post.category}}</i> with id {{post.id}}</p>
         <p>{{post.content}}</p>
         <button id = "deletePost" ng-click="deletePost(post.id)" ng-show="post.author == usr && loginResult">Delete</button>
         <button id = "editPost" ng-click="edit=true" ng-show="post.author == usr && loginResult">Edit</button>
@@ -91,7 +91,7 @@
         </div>
 
         <div ng-show="edit">
-            </br><textarea id = {{post.id}} rows="10" cols="50">{{post.content}}</textarea>
+            </br><textarea id = {{"edited"+post.id}} rows="10" cols="50">{{post.content}}</textarea>
             <p>{{post.content}}</p>
             <button id = "editPostOk" ng-click="editPost(post.id); edit = false">Ok</button>
         </div>
