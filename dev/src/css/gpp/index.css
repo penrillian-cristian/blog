@@ -17,3 +17,9 @@
 input {
     width: 220px
 }
+
+
+.settingsPage{
+    margin: 5px auto 0;
+    align-content: center;
+}

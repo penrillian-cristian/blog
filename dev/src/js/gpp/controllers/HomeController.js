@@ -13,6 +13,8 @@ ApplicationControllers.controller("HomeController", ["$scope", "localStorageServ
     $scope.commentPressed = false;
     $scope.isCommentText = false;
     $scope.mainPage = true;
+    $scope.categories = ["Media", "Technology", "Food"];
+    $scope.email = null;
 
     //$scope.months = ["February 2014","January 2014","December 2013","November 2013","October 2013","September 2013","August 2013","July 2013","June 2013","May 2013","April 2013","March 2013"];
 
@@ -32,9 +34,9 @@ ApplicationControllers.controller("HomeController", ["$scope", "localStorageServ
         $scope.posts = localStorageService.get("posts");
     } else {
         $scope.posts = [
-            {id: 1, title: "Post from February", date: "February 2014", datecode: "February 2014", author: "Filip Machinia", category: "Technology", content: "This is the first blog post", commentText: ""},
-            {id: 2, title: "Post from March", date: "March 2013", datecode: "March 2013", author: "Cristian Ivascu", category: "Technology", content: "This is the second blog post", commentText: ""},
-            {id: 3, title: "Post from March", date: "March 2013", datecode: "March 2013", author: "Chris Allison", category: "Media", content: "This is the third blog post", commentText: ""}
+            {id: 1, title: "Post from February", date: "February 2014", datecode: "February 2014", author: "Filip Machinia", category: $scope.categories[1], content: "This is the first blog post", commentText: ""},
+            {id: 2, title: "Post from March", date: "March 2013", datecode: "March 2013", author: "Cristian Ivascu", category: $scope.categories[1], content: "This is the second blog post", commentText: ""},
+            {id: 3, title: "Post from March", date: "March 2013", datecode: "March 2013", author: "Chris Allison", category: $scope.categories[0], content: "This is the third blog post", commentText: ""}
         ];
     }
 
@@ -48,18 +50,18 @@ ApplicationControllers.controller("HomeController", ["$scope", "localStorageServ
     $scope.displayPosts();
 
 
-    $scope.register = function (username, password, email) {
+    $scope.register = function (username, password, userEmail) {
         $scope.loginResultString = "";
         $scope.registerResultString = "";
         $scope.registerResult = false;
 
-        if (!username || !password || !email) {
+        if (!username || !password || !userEmail) {
             $scope.registerResultString = "Required fields are empty";
             $scope.registerResult = false;
         }
         else {
 
-            if (!$scope.emailCheck(email)) {
+            if (!$scope.emailCheck(userEmail)) {
                 $scope.registerResultString = "Invalid email address";
                 $scope.registerResult = false;
                 return;
@@ -78,10 +80,11 @@ ApplicationControllers.controller("HomeController", ["$scope", "localStorageServ
             $scope.registerResult = true;
             $scope.loginResult = true;
             $scope.usr = username;
+            $scope.email = userEmail;
 
             $scope.username = "";
             $scope.password = "";
-            $scope.email = "";
+            $scope.userEmail = "";
         }
 
 
@@ -104,6 +107,7 @@ ApplicationControllers.controller("HomeController", ["$scope", "localStorageServ
                 $scope.loginResultString = "Login was successful";
                 $scope.loginResult = true;
                 $scope.usr = user;
+                $scope.email = localStorageService.get("email");
                 $scope.user = "";
                 $scope.pass = "";
 
@@ -117,8 +121,30 @@ ApplicationControllers.controller("HomeController", ["$scope", "localStorageServ
 
     };
 
-    $scope.updateEmail = function (email) {
-        email = 5;
+    $scope.updateEmail = function (newEmail) {
+        if (!$scope.emailCheck(newEmail)) {
+            $scope.emailResultString = "Invalid email address";
+        }
+        else if ($scope.email === newEmail) {
+            $scope.emailResultString = "New email address is the same as the old one";
+        }
+        else {
+            $scope.email = newEmail;
+            localStorageService.add("email", newEmail);
+            $scope.emailResultString = "Change successful";
+
+            var newEmailField = document.getElementById("emailChange");
+            newEmailField.value = "";
+        }
+
+    };
+
+    $scope.addCategory = function (category) {
+        $scope.categories.push(category);
+        localStorageService.add("category", $scope.categories);
+        var newCategoryField = document.getElementById("newCategory");
+        newCategoryField.value = "";
+
     };
 
     $scope.clearResults = function () {
@@ -130,9 +156,11 @@ ApplicationControllers.controller("HomeController", ["$scope", "localStorageServ
 
         var regUsernameField = document.getElementById("registerUsernameField");
         var regPasswordField = document.getElementById("registerPasswordField");
+        var regEmailField = document.getElementById("emailAddress");
 
         regUsernameField.value = "";
         regPasswordField.value = "";
+        regEmailField.value = "";
 
         $scope.registerResult = false;
         $scope.loginResult = false;
@@ -194,7 +222,7 @@ ApplicationControllers.controller("HomeController", ["$scope", "localStorageServ
                 break;
             }
         }
-        $scope.userID="";
+        $scope.userID = "";
         //}
         //editedText = "";
     };

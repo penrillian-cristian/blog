@@ -8,14 +8,18 @@
 
 <!--<html lang="en">-->
 
-<body>
+<body xmlns="http://www.w3.org/1999/html">
 <a id="top"> </a>
 
 <div class="blog-masthead">
     <div class="container">
         <nav class="blog-nav">
-            <button class="blog-nav-item" href="#" ng-click="mainPage=true" style = "border: none;padding: 0;background: none; outline:0">Home &nbsp&nbsp</button>
-            <button class="blog-nav-item" href="#settings" ng-click="mainPage=false" style = "border: none;padding: 0;background: none; outline:0">Settings&nbsp</button>
+            <button class="blog-nav-item" href="#" ng-click="mainPage=true"
+                    style="border: none;padding: 0;background: none; outline:0">Home &nbsp&nbsp
+            </button>
+            <button class="blog-nav-item" href="#settings" ng-click="mainPage=false; newCat=false; newEmailMessage=false"
+                    style="border: none;padding: 0;background: none; outline:0">Settings&nbsp
+            </button>
 
             <a class="blog-nav-item" href="#">Press</a>
             <a class="blog-nav-item" href="#">New hires</a>
@@ -23,182 +27,209 @@
         </nav>
     </div>
 </div>
+<!-- col-sm-3 col-sm-offset-1-->
+<div id="settingsPage" class =" col-sm-offset-5" ng-show="!mainPage && loginResult">
+    <h1>Settings</h1>
+    </br>
+    Change email: </br><input id="emailChange" ng-model="newEmail">
+    <button id="emailOk" ng-click="updateEmail(newEmail); newEmailMessage=true">Ok</button>
+    <p ng-show="newEmailMessage" id="emailChangeResult">{{emailResultString}}</p>
 
-<div ng-show="!mainPage && loginResult">
-    Change email: </br><input  id = "emailChange" ng-model="newEmail">
-    <button id = "emailOk" ng-click="updateEmail(newEmail);">Ok</button>
+    </br></br>
+    Add new category: </br><input id="newCategory" ng-model="newCategory">
+    <button id="categoryOk" ng-click="addCategory(newCategory); newCat=true">Ok</button>
+    <p ng-show="newCat">Category added</p>
 </div>
 
 <div class="container" ng-show="mainPage">
 
-<div class="blog-header">
-    <h1 class="blog-title">Welcome to our Blog</h1>
+    <div class="blog-header">
+        <h1 class="blog-title">Welcome to our Blog</h1>
 
-    <p class="lead blog-description">Welcome!</p>
+        <p class="lead blog-description">Welcome!</p>
 
-    <button id = "writePost" ng-click=" write=true" ng-hide="!loginResult || write">Write new post</button>
-   
-
-    <button ng-click="clearFunc()">Clear Data</button>
-    <p>{{writeAttemptResultString}}</p>
-</div>
+        <button id="writePost" ng-click=" write=true" ng-hide="!loginResult || write">Write new post</button>
 
 
-
-
-<div class="col-sm-8 blog-main" ng-show = "write">
-    <p id = "writeError">{{writePostError}}</p>
-    <dl>
-        <dt> Title: </br><input id = "pTitle" ng-model="postTitle"> </dt>
-        <dt> Category: </br><input  id = "pCategory" ng-model="postCategory"> </dt>
-        <dt> Text: </br><textarea id = "pText" rows="10" cols="50" ng-model="postText"></textarea> </dt>
-        <dt><button id = "writeOk" ng-click="writePost(postTitle, postCategory, postText);">Ok</button>
-            <button id = "cancelWrite" ng-click="write=false; clearWriteFields();">Cancel</button>
-        </dt>
-    </dl>
-</div>
-
-
-
-
-
-<div class="row" ng-hide = "write">
-<div class="col-sm-8 blog-main">
-
-    <!--ng-show="post.datecode===desiredMonth || allDisplayed"-->
-    <div class="post" ng-repeat="post in topPostsArray" >
-        <!--{{post.title+" "+post.id}}-->
-
-        <h2 class="blog-post-title">{{post.title}}</h2>
-
-        <p class="blog-post-meta">{{post.date}} by <a href="#">{{post.author}}</a> in <i>{{post.category}}</i> with id {{post.id}}</p>
-        <p>{{post.content}}</p>
-        <button id = "deletePost" ng-click="deletePost(post.id)" ng-show="post.author == usr && loginResult">Delete</button>
-        <button id = "editPost" ng-click="edit=true" ng-show="post.author == usr && loginResult">Edit</button>
-
-        <button id = "writeComment" ng-click="comment=true" ng-show ="loginResult && !comment">Write a comment</button>
-        <div id="commentForm" ng-show="comment">
-            <dl>
-                <dt><textarea id = "commentText" rows="10" cols="50" ng-model="commentText"></textarea></dt>
-                <dt><button id = "writeCommentOk" ng-click="comment=false; isCommentText = true; writeComment(commentText, post.id)">Ok</button>
-                    <button id = "cancelWriteComment" ng-click="comment=false">Cancel</button></dt>
-            </dl>
-        </div>
-
-
-        <div id = "commentContent">
-            {{post.commentText}}
-        </div>
-
-        <div ng-show="edit">
-            </br><textarea id = {{post.id}} rows="10" cols="50">{{post.content}}</textarea>
-            <p>{{post.content}}</p>
-            <button id = "editPostOk" ng-click="editPost(post.id); edit = false">Ok</button>
-        </div>
-        <br>
-        <br>
-
+        <button ng-click="clearFunc()">Clear Data</button>
+        <p>{{writeAttemptResultString}}</p>
     </div>
 
-    <div class="prevNext-footer" ng-hide = "write">
-        <ul class="pager">
 
-            <button id = "previousButton" align ="center" ng-click="movePage('left')">Previous</button>
-            <button id = "nextButton" align="right"  ng-click="movePage('right')">Next</button>
+    <div class="col-sm-8 blog-main" ng-show="write">
+        <p id="writeError">{{writePostError}}</p>
+        <dl>
+            <dt> Title: </br><input id="pTitle" ng-model="postTitle"></dt>
+            <dt> Category: </br>
+                <select id="pCategory" ng-model="postCategory">
 
-        </ul>
+                    <option ng-repeat="category in categories" value="{{category}}">{{category}}</option>
+
+                </select></dt>
+            <dt> Text: </br><textarea id="pText" rows="10" cols="50" ng-model="postText"></textarea></dt>
+            <dt>
+                <button id="writeOk" ng-click="writePost(postTitle, postCategory, postText);">Ok</button>
+                <button id="cancelWrite" ng-click="write=false; clearWriteFields();">Cancel</button>
+            </dt>
+        </dl>
     </div>
 
-</div>
-<!-- /.blog-main -->
 
-<div class="col-sm-3 col-sm-offset-1 blog-sidebar">
-    <div class="login">
+    <div class="row" ng-hide="write">
+        <div class="col-sm-8 blog-main">
 
-        <!-- <form>
-             <fieldset>
-                 username: <input id="inuser" type="text" name="username"><br/>
-                 password: <input id="inpassword" type="text" name="password"><br/>
-                 <input type="submit" value="Submit"><br/>
-             </fieldset>
-         </form>-->
+            <!--ng-show="post.datecode===desiredMonth || allDisplayed"-->
+            <div class="post" ng-repeat="post in topPostsArray">
+                <!--{{post.title+" "+post.id}}-->
 
-        <!--<div ng-controller="HomeController">-->
+                <h2 class="blog-post-title">{{post.title}}</h2>
 
-        <div id="welcomeMessage" ng-show="registerResult || loginResult">
-            <p id = "welcomeText">Welcome {{usr}}! </p>
-            <button id = "logoutButton" ng-click="pressed = false; clearResults()">Logout</button>
+                <p class="blog-post-meta">{{post.date}} by <a href="#">{{post.author}}</a> in <i>{{post.category}}</i>
+                    with id {{post.id}}</p>
+
+                <p id="postContent">{{post.content}}</p>
+                <button id="deletePost" ng-click="deletePost(post.id)" ng-show="post.author == usr && loginResult">
+                    Delete
+                </button>
+                <button id="editPost" ng-click="edit=true" ng-show="post.author == usr && loginResult">Edit</button>
+                <p id="findMe">{{post.id}}</p>
+                <button id="writeComment" ng-click="comment=true" ng-show="loginResult && !comment">Write a comment
+                </button>
+                <div id="commentForm" ng-show="comment">
+                    <dl>
+                        <dt><textarea id="commentText" rows="10" cols="50" ng-model="commentText"></textarea></dt>
+                        <dt>
+                            <button id="writeCommentOk"
+                                    ng-click="comment=false; isCommentText = true; writeComment(commentText, post.id)">
+                                Ok
+                            </button>
+                            <button id="cancelWriteComment" ng-click="comment=false">Cancel</button>
+                        </dt>
+                    </dl>
+                </div>
+
+
+                <div id="commentContent">
+                    {{post.commentText}}
+                </div>
+
+                <div ng-show="edit">
+                    </br><textarea id={{post.id}} rows="10" cols="50">{{post.content}}</textarea>
+
+                    <p>{{post.content}}</p>
+                    <button id="editPostOk" ng-click="editPost(post.id); edit = false">Ok</button>
+                </div>
+                <br>
+                <br>
+
+            </div>
+
+            <div class="prevNext-footer" ng-hide="write">
+                <ul class="pager">
+
+                    <button id="previousButton" align="center" ng-click="movePage('left')">Previous</button>
+                    <button id="nextButton" align="right" ng-click="movePage('right')">Next</button>
+
+                </ul>
+            </div>
+
         </div>
+        <!-- /.blog-main -->
+
+        <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+            <div class="login">
+
+                <!-- <form>
+                     <fieldset>
+                         username: <input id="inuser" type="text" name="username"><br/>
+                         password: <input id="inpassword" type="text" name="password"><br/>
+                         <input type="submit" value="Submit"><br/>
+                     </fieldset>
+                 </form>-->
+
+                <!--<div ng-controller="HomeController">-->
+
+                <div id="welcomeMessage" ng-show="registerResult || loginResult">
+                    <p id="welcomeText">Welcome {{usr}}!</p>
+
+                    <p>Email: {{email}}</p>
+                    <button id="logoutButton" ng-click="pressed = false; clearResults()">Logout</button>
+                </div>
 
 
-        <div id="registerForm" ng-show="pressed && !registerResult && !loginResult">
-            username: <input id="registerUsernameField" ng-model="username">
-            password: <input id="registerPasswordField" type = "password" ng-model="password">
-            email:    <input id="emailAddress" ng-model="email">
-            <button id="registerConfirm" ng-click="register(username,password, email)">Ok</button>
-            <button id="registerCancel" ng-click="pressed=!pressed;clearResults()"> Cancel</button>
+                <div id="registerForm" ng-show="pressed && !registerResult && !loginResult">
+                    username: <input id="registerUsernameField" ng-model="username">
+                    password: <input id="registerPasswordField" type="password" ng-model="password">
+                    email: <input id="emailAddress" ng-model="email">
+                    <button id="registerConfirm" ng-click="register(username,password, email)">Ok</button>
+                    <button id="registerCancel" ng-click="pressed=!pressed;clearResults()"> Cancel</button>
 
+                </div>
+                <p id="registerResult">{{registerResultString}}</p>
+
+                <div id="loginForm" ng-show="!pressed && !registerResult && !loginResult">
+                    username: <input id="loginUsernameField" ng-model="user">
+                    password: <input id="loginPasswordField" type="password" ng-model="pass">
+                    <button id="loginButton" ng-click="login(user,pass)">Login</button>
+                    <button id="registerButton" ng-click="pressed=!pressed"> Register</button>
+
+                </div>
+                <p id="loginResult" ng-show="!pressed">{{loginResultString}}</p>
+                <!--<button ng-click="printout()">Test</button>
+                <p>{{key}}</p>-->
+
+
+            </div>
+
+            <div class="sidebar-module sidebar-module-inset">
+                <h4>About</h4>
+
+                <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet
+                    fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
+            </div>
+            <div class="sidebar-module">
+                <h4>Archives</h4>
+                <ol class="list-unstyled">
+                    <li>
+                        <button id="seeAllMonths" ng-click="allDisplayed()"
+                                style="border: none;padding: 0;background: none; outline:0">See all
+                        </button>
+                    </li>
+                    <li ng-repeat="month in months">
+                        <button id={{month}} ng-click="setMonth(month);"
+                                style="border: none;padding: 0;background: none; outline:0">{{month}}
+                        </button>
+                    </li>
+
+
+                    <!-- <li> <button ng-click="setMonth('March2014');" style = "border: none;padding: 0;background: none; outline:0">March 2014</button></li>
+                     <li> <button ng-click="setMonth('February2014');" style = "border: none;padding: 0;background: none; outline:0">February 2014</button></li>
+                     <li> <button ng-click="setMonth('January2014');" style = "border: none;padding: 0;background: none; outline:0">January 2014</button></li>
+                     <li> <button ng-click="setMonth('December2013');" style = "border: none;padding: 0;background: none; outline:0">December 2013</button></li>
+                     <li> <button ng-click="setMonth('November2013');" style = "border: none;padding: 0;background: none; outline:0">November 2013</button></li>
+                     <li> <button ng-click="setMonth('October2013');" style = "border: none;padding: 0;background: none; outline:0">October 2013</button></li>
+                     <li> <button ng-click="setMonth('September2013');" style = "border: none;padding: 0;background: none; outline:0">September 2013</button></li>
+                     <li> <button ng-click="setMonth('August2013');" style = "border: none;padding: 0;background: none; outline:0">August 2013</button></li>
+                     <li> <button ng-click="setMonth('July2013');" style = "border: none;padding: 0;background: none; outline:0">July 2013</button></li>
+                     <li> <button ng-click="setMonth('June2013');" style = "border: none;padding: 0;background: none; outline:0">June 2013</button></li>
+                     <li> <button ng-click="setMonth('May2013');" style = "border: none;padding: 0;background: none; outline:0">May 2013</button></li>
+                     <li> <button ng-click="setMonth('April2013');" style = "border: none;padding: 0;background: none; outline:0">April 2013</button></li>
+                     <li> <button ng-click="setMonth('March2013');" style = "border: none;padding: 0;background: none; outline:0">March 2013</button></li>-->
+                </ol>
+            </div>
+            <div class="sidebar-module">
+                <h4>Elsewhere</h4>
+                <ol class="list-unstyled">
+                    <li><a href="#">GitHub</a></li>
+                    <li><a href="#">Twitter</a></li>
+                    <li><a href="#">Facebook</a></li>
+                </ol>
+            </div>
         </div>
-        <p id = "registerResult">{{registerResultString}}</p>
-
-        <div id="loginForm" ng-show="!pressed && !registerResult && !loginResult">
-            username: <input id="loginUsernameField" ng-model="user">
-            password: <input id="loginPasswordField" type = "password" ng-model="pass">
-            <button id="loginButton" ng-click="login(user,pass)">Login</button>
-            <button id="registerButton" ng-click="pressed=!pressed"> Register</button>
-
-        </div>
-        <p id = "loginResult" ng-show="!pressed">{{loginResultString}}</p>
-        <!--<button ng-click="printout()">Test</button>
-        <p>{{key}}</p>-->
-
+        <!-- /.blog-sidebar -->
 
     </div>
-
-    <div class="sidebar-module sidebar-module-inset">
-        <h4>About</h4>
-
-        <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet
-            fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
-    </div>
-    <div class="sidebar-module">
-        <h4>Archives</h4>
-        <ol class="list-unstyled">
-            <li> <button id="seeAllMonths" ng-click="allDisplayed()" style = "border: none;padding: 0;background: none; outline:0">See all</button></li>
-            <li ng-repeat="month in months"> <button id={{month}} ng-click="setMonth(month);" style = "border: none;padding: 0;background: none; outline:0">{{month}}</button></li>
-
-
-           <!-- <li> <button ng-click="setMonth('March2014');" style = "border: none;padding: 0;background: none; outline:0">March 2014</button></li>
-            <li> <button ng-click="setMonth('February2014');" style = "border: none;padding: 0;background: none; outline:0">February 2014</button></li>
-            <li> <button ng-click="setMonth('January2014');" style = "border: none;padding: 0;background: none; outline:0">January 2014</button></li>
-            <li> <button ng-click="setMonth('December2013');" style = "border: none;padding: 0;background: none; outline:0">December 2013</button></li>
-            <li> <button ng-click="setMonth('November2013');" style = "border: none;padding: 0;background: none; outline:0">November 2013</button></li>
-            <li> <button ng-click="setMonth('October2013');" style = "border: none;padding: 0;background: none; outline:0">October 2013</button></li>
-            <li> <button ng-click="setMonth('September2013');" style = "border: none;padding: 0;background: none; outline:0">September 2013</button></li>
-            <li> <button ng-click="setMonth('August2013');" style = "border: none;padding: 0;background: none; outline:0">August 2013</button></li>
-            <li> <button ng-click="setMonth('July2013');" style = "border: none;padding: 0;background: none; outline:0">July 2013</button></li>
-            <li> <button ng-click="setMonth('June2013');" style = "border: none;padding: 0;background: none; outline:0">June 2013</button></li>
-            <li> <button ng-click="setMonth('May2013');" style = "border: none;padding: 0;background: none; outline:0">May 2013</button></li>
-            <li> <button ng-click="setMonth('April2013');" style = "border: none;padding: 0;background: none; outline:0">April 2013</button></li>
-            <li> <button ng-click="setMonth('March2013');" style = "border: none;padding: 0;background: none; outline:0">March 2013</button></li>-->
-        </ol>
-    </div>
-    <div class="sidebar-module">
-        <h4>Elsewhere</h4>
-        <ol class="list-unstyled">
-            <li><a href="#">GitHub</a></li>
-            <li><a href="#">Twitter</a></li>
-            <li><a href="#">Facebook</a></li>
-        </ol>
-    </div>
-</div>
-<!-- /.blog-sidebar -->
-
-</div>
-<!-- /.row -->
-
-
-
+    <!-- /.row -->
 
 
 </div>
