@@ -212,7 +212,7 @@ ApplicationControllers.controller("HomeController", ["$scope", "localStorageServ
     };
 
     $scope.editPost = function (userID) {
-        var editedText = document.getElementById(userID).value;
+        var editedText = document.getElementById("edited"+userID).value;
         //if (editedText.length) {
 
         for (var j = 0; j < $scope.posts.length; j++) {
