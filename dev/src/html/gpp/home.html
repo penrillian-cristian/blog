@@ -166,29 +166,24 @@
         <ol class="list-unstyled">
             <li> <button id="seeAllMonths" ng-click="allDisplayed()" style = "border: none;padding: 0;background: none; outline:0">See all</button></li>
             <li ng-repeat="month in months"> <button id={{month}} ng-click="setMonth(month);" style = "border: none;padding: 0;background: none; outline:0">{{month}}</button></li>
-
-
-           <!-- <li> <button ng-click="setMonth('March2014');" style = "border: none;padding: 0;background: none; outline:0">March 2014</button></li>
-            <li> <button ng-click="setMonth('February2014');" style = "border: none;padding: 0;background: none; outline:0">February 2014</button></li>
-            <li> <button ng-click="setMonth('January2014');" style = "border: none;padding: 0;background: none; outline:0">January 2014</button></li>
-            <li> <button ng-click="setMonth('December2013');" style = "border: none;padding: 0;background: none; outline:0">December 2013</button></li>
-            <li> <button ng-click="setMonth('November2013');" style = "border: none;padding: 0;background: none; outline:0">November 2013</button></li>
-            <li> <button ng-click="setMonth('October2013');" style = "border: none;padding: 0;background: none; outline:0">October 2013</button></li>
-            <li> <button ng-click="setMonth('September2013');" style = "border: none;padding: 0;background: none; outline:0">September 2013</button></li>
-            <li> <button ng-click="setMonth('August2013');" style = "border: none;padding: 0;background: none; outline:0">August 2013</button></li>
-            <li> <button ng-click="setMonth('July2013');" style = "border: none;padding: 0;background: none; outline:0">July 2013</button></li>
-            <li> <button ng-click="setMonth('June2013');" style = "border: none;padding: 0;background: none; outline:0">June 2013</button></li>
-            <li> <button ng-click="setMonth('May2013');" style = "border: none;padding: 0;background: none; outline:0">May 2013</button></li>
-            <li> <button ng-click="setMonth('April2013');" style = "border: none;padding: 0;background: none; outline:0">April 2013</button></li>
-            <li> <button ng-click="setMonth('March2013');" style = "border: none;padding: 0;background: none; outline:0">March 2013</button></li>-->
         </ol>
+
+        <br>
+
+        <h4>Sort by</h4>
+        <ol class="list-unstyled">
+            <li> <button id="seeRecent" ng-click="sort('seeRecent')" style = "border: none;padding: 0;background: none; outline:0">Most recent first</button></li>
+            <li> <button id="seeOldest" ng-click="sort('seeOldest')" style = "border: none;padding: 0;background: none; outline:0">Oldest first</button></li>
+
+        </ol>
+
     </div>
     <div class="sidebar-module">
         <h4>Elsewhere</h4>
         <ol class="list-unstyled">
-            <li><a href="#">GitHub</a></li>
-            <li><a href="#">Twitter</a></li>
-            <li><a href="#">Facebook</a></li>
+            <li><a href="https://github.com/">GitHub</a></li>
+            <li><a href="https://twitter.com/">Twitter</a></li>
+            <li><a href="https://www.facebook.com/">Facebook</a></li>
         </ol>
     </div>
 </div>
