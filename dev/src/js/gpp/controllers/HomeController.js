@@ -19,6 +19,8 @@ ApplicationControllers.controller("HomeController", ["$scope", "localStorageServ
     $scope.users = [
         {username: "user", password: "abc", email: "test@tt.com"}
     ];
+    $scope.oldest = false;
+
     //$scope.months = ["February 2014","January 2014","December 2013","November 2013","October 2013","September 2013","August 2013","July 2013","June 2013","May 2013","April 2013","March 2013"];
 
     //$scope.createUploadButton();
@@ -46,6 +48,7 @@ ApplicationControllers.controller("HomeController", ["$scope", "localStorageServ
     }
 
     $scope.displayPosts = function () {
+
         if ($scope.monthFilterSet) {
             $scope.topPostsArray = $scope.selectedMonthArray.slice(0 + $scope.offset, 5 + $scope.offset);
         } else {
@@ -339,7 +342,7 @@ ApplicationControllers.controller("HomeController", ["$scope", "localStorageServ
     $scope.writeComment = function (text, id) {
         for (var j = 0; j < $scope.posts.length; j++) {
             if ($scope.posts[j].id === id) {
-                $scope.posts[j].commentText = $scope.usr + " says: " + "'" + text + "'";
+                $scope.posts[j].commentText += "\n\n"+$scope.usr + " says: " + "'" + text + "'";
                 localStorageService.add("posts", $scope.posts);
                 break;
             }
@@ -394,6 +397,24 @@ ApplicationControllers.controller("HomeController", ["$scope", "localStorageServ
         }
 
         return monthString;
+    };
+
+    $scope.sort = function(order){
+         if(order === "seeRecent"){
+             if ($scope.oldest){
+                 $scope.oldest = false;
+                 $scope.selectedMonthArray.reverse();
+                 $scope.posts.reverse();
+                 $scope.displayPosts();
+             }
+         } else{
+             if (!$scope.oldest){
+                 $scope.oldest = true;
+                 $scope.selectedMonthArray.reverse();
+                 $scope.posts.reverse();
+                 $scope.displayPosts();
+             }
+         }
     };
 
 

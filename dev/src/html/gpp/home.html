@@ -206,7 +206,9 @@
                                 style="border: none;padding: 0;background: none; outline:0">{{month}}
                         </button>
                     </li>
+        </ol>
 
+        <br>
 
                     <!-- <li> <button ng-click="setMonth('March2014');" style = "border: none;padding: 0;background: none; outline:0">March 2014</button></li>
                      <li> <button ng-click="setMonth('February2014');" style = "border: none;padding: 0;background: none; outline:0">February 2014</button></li>
@@ -234,8 +236,24 @@
         </div>
         <!-- /.blog-sidebar -->
 
+        <h4>Sort by</h4>
+        <ol class="list-unstyled">
+            <li> <button id="seeRecent" ng-click="sort('seeRecent')" style = "border: none;padding: 0;background: none; outline:0">Most recent first</button></li>
+            <li> <button id="seeOldest" ng-click="sort('seeOldest')" style = "border: none;padding: 0;background: none; outline:0">Oldest first</button></li>
+
+        </ol>
+
     </div>
-    <!-- /.row -->
+    <div class="sidebar-module">
+        <h4>Elsewhere</h4>
+        <ol class="list-unstyled">
+            <li><a href="https://github.com/">GitHub</a></li>
+            <li><a href="https://twitter.com/">Twitter</a></li>
+            <li><a href="https://www.facebook.com/">Facebook</a></li>
+        </ol>
+    </div>
+</div>
+<!-- /.blog-sidebar -->
 
 
 </div>
