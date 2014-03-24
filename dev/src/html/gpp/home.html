@@ -17,7 +17,7 @@
             <button class="blog-nav-item" href="#" ng-click="mainPage=true"
                     style="border: none;padding: 0;background: none; outline:0">Home &nbsp&nbsp
             </button>
-            <button class="blog-nav-item" href="#settings" ng-click="mainPage=false; newCat=false; newEmailMessage=false"
+            <button class="blog-nav-item" href="#settings" ng-click="mainPage=false; newCat=false; newEmailMessage=false;"
                     style="border: none;padding: 0;background: none; outline:0">Settings&nbsp
             </button>
 
@@ -48,7 +48,7 @@
 
         <p class="lead blog-description">Welcome!</p>
 
-        <button id="writePost" ng-click=" write=true" ng-hide="!loginResult || write">Write new post</button>
+        <button id="writePost" ng-click=" write=true;" ng-hide="!loginResult || write">Write new post</button>
 
 
         <button ng-click="clearFunc()">Clear Data</button>
@@ -58,6 +58,12 @@
 
     <div class="col-sm-8 blog-main" ng-show="write">
         <p id="writeError">{{writePostError}}</p>
+
+        <div class="choose_file">
+            <span>Choose File</span>
+            <input name="Select File" type="file" onchange="this.form.value=this.value"/>
+        </div>
+        <p>this.form.value</p>
         <dl>
             <dt> Title: </br><input id="pTitle" ng-model="postTitle"></dt>
             <dt> Category: </br>

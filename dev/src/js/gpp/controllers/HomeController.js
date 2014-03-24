@@ -14,10 +14,14 @@ ApplicationControllers.controller("HomeController", ["$scope", "localStorageServ
     $scope.isCommentText = false;
     $scope.mainPage = true;
     $scope.categories = ["Media", "Technology", "Food"];
-    $scope.email = null;
-
+    //$scope.emails = [];
+    $scope.currentUser = [];
+    $scope.users = [
+        {username: "user", password: "abc", email: "test@tt.com"}
+    ];
     //$scope.months = ["February 2014","January 2014","December 2013","November 2013","October 2013","September 2013","August 2013","July 2013","June 2013","May 2013","April 2013","March 2013"];
 
+    //$scope.createUploadButton();
 
     if (localStorageService.get("months")) {
         $scope.months = localStorageService.get("months");
@@ -32,6 +36,7 @@ ApplicationControllers.controller("HomeController", ["$scope", "localStorageServ
 
     if (localStorageService.get("posts")) {
         $scope.posts = localStorageService.get("posts");
+        $scope.users = localStorageService.get("users");
     } else {
         $scope.posts = [
             {id: 1, title: "Post from February", date: "February 2014", datecode: "February 2014", author: "Filip Machinia", category: $scope.categories[1], content: "This is the first blog post", commentText: ""},
@@ -74,13 +79,18 @@ ApplicationControllers.controller("HomeController", ["$scope", "localStorageServ
             }
 
 
-            localStorageService.add(username, password);
+            //localStorageService.add(username, password);
 
             $scope.registerResultString = "Registration was successful";
             $scope.registerResult = true;
             $scope.loginResult = true;
-            $scope.usr = username;
-            $scope.email = userEmail;
+
+            $scope.users.push(username, password, userEmail);
+            $scope.currentUser = [username, password, userEmail];
+            localStorageService.add("users", $scope.users);
+
+            //$scope.usr = username;
+            //$scope.emails.push(userEmail);
 
             $scope.username = "";
             $scope.password = "";
@@ -102,15 +112,18 @@ ApplicationControllers.controller("HomeController", ["$scope", "localStorageServ
 
         } else {
 
+            var userIndex = $scope.getUserIndex(user);
+            //if (localStorageService.get($scope.users[user].username) === user) {
+            if (userIndex) {
+                if ($scope.users[userIndex].username === user) {
+                    $scope.loginResultString = "Login was successful";
+                    $scope.loginResult = true;
+                    $scope.usr = user;
+                    //$scope.emails = localStorageService.get("emails");
 
-            if (localStorageService.get(user) === pass) {
-                $scope.loginResultString = "Login was successful";
-                $scope.loginResult = true;
-                $scope.usr = user;
-                $scope.email = localStorageService.get("email");
-                $scope.user = "";
-                $scope.pass = "";
-
+                    $scope.user = "";
+                    $scope.pass = "";
+                }
             } else {
                 $scope.loginResultString = "Invalid username or password";
                 $scope.loginResult = false;
@@ -121,6 +134,21 @@ ApplicationControllers.controller("HomeController", ["$scope", "localStorageServ
 
     };
 
+    $scope.getUserIndex = function (usrName) {
+
+        for (var index = 0; index < $scope.users.length; index++) {
+            if ($scope.users[index].username === usrName) {
+                return index;
+                //break;
+            }
+            else if (index + 1 === $scope.users.length) {
+                return false;
+            }
+
+        }
+        //return false;
+    };
+
     $scope.updateEmail = function (newEmail) {
         if (!$scope.emailCheck(newEmail)) {
             $scope.emailResultString = "Invalid email address";
@@ -129,8 +157,9 @@ ApplicationControllers.controller("HomeController", ["$scope", "localStorageServ
             $scope.emailResultString = "New email address is the same as the old one";
         }
         else {
-            $scope.email = newEmail;
-            localStorageService.add("email", newEmail);
+            //TODO change to array
+            $scope.emails = newEmail;
+            localStorageService.add("emails", newEmail);
             $scope.emailResultString = "Change successful";
 
             var newEmailField = document.getElementById("emailChange");
@@ -146,6 +175,13 @@ ApplicationControllers.controller("HomeController", ["$scope", "localStorageServ
         newCategoryField.value = "";
 
     };
+
+    $scope.createUploadButton = function () {
+        var x = document.createElement("INPUT");
+        x.setAttribute("type", "file");
+        document.body.appendChild(x);
+    };
+
 
     $scope.clearResults = function () {
         var logUsernameField = document.getElementById("loginUsernameField");
@@ -212,7 +248,7 @@ ApplicationControllers.controller("HomeController", ["$scope", "localStorageServ
     };
 
     $scope.editPost = function (userID) {
-        var editedText = document.getElementById("edited"+userID).value;
+        var editedText = document.getElementById("edited" + userID).value;
         //if (editedText.length) {
 
         for (var j = 0; j < $scope.posts.length; j++) {
@@ -363,3 +399,7 @@ ApplicationControllers.controller("HomeController", ["$scope", "localStorageServ
 
 }]);
 
+//TODO
+//angular filter for month mapping
+//angular user service for storing data
+//second Controller in controllers folder
